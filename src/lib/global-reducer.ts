@@ -6,6 +6,8 @@ import * as React from 'react';
 import {ACTIONS, Action, AppState} from './reducer-actions';
 
 import {FITFAMAPP, signOut, type userTypeProps} from '@utils/firebase';
+import {APP_GLOBAL_STATE} from '@shared-constants/app-config';
+import {setStorageItemAsync} from '@local-storage';
 
 export const initialState: AppState = {
 	isAuthenticated: false,
@@ -21,20 +23,19 @@ export const GlobalStateContext = React.createContext<{
 export const AppReducer = (state: AppState, action: Action): AppState => {
 	switch (action.type) {
 		case ACTIONS.LOGIN_STATE:
-			return {
-				...state,
+			return updateAppStateAndStorage(state, {
 				User: action.payload,
 				isAuthenticated: true,
 				last_updated: Date.now(),
-			};
+			});
 
 		case ACTIONS.UPDATE_USER:
-			return {
-				...state,
+			return updateAppStateAndStorage(state, {
 				User: action.payload,
-			};
+			});
+
 		case ACTIONS.RESET_STATE:
-			return initialState;
+			return resetAppStateAndStorage();
 
 		default:
 			return state;
@@ -57,3 +58,17 @@ export const loginUser = (
 	dispatch: React.Dispatch<Action>,
 	user: userTypeProps
 ) => dispatch({type: ACTIONS.LOGIN_STATE, payload: user});
+
+const updateAppStateAndStorage = (
+	state: AppState,
+	newState: Partial<AppState>
+): AppState => {
+	const updatedState = {...state, ...newState};
+	setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(updatedState));
+	return updatedState;
+};
+
+const resetAppStateAndStorage = (): AppState => {
+	setStorageItemAsync(APP_GLOBAL_STATE, null);
+	return initialState;
+};

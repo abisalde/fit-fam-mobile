@@ -34,8 +34,7 @@ export default function RootLayoutNav() {
 
 	return (
 		<Stack screenOptions={{headerShown: false}}>
-			<Stack.Screen name='/sign-up' />
-			<Stack.Screen name='/verify-email' />
+			<Stack.Screen name='index' />
 		</Stack>
 	);
 }

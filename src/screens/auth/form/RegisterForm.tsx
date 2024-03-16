@@ -68,6 +68,8 @@ export function RegisterForm({onSubmit}: LoginFormProps) {
 							style={styles.icon}
 						/>
 					}
+					keyboardType='email-address'
+					returnKeyType='next'
 				/>
 				<Separator height={23} />
 				<PasswordField
@@ -75,6 +77,7 @@ export function RegisterForm({onSubmit}: LoginFormProps) {
 					field='password'
 					showPassword={showPassword}
 					updatePassword={updatePassword}
+					returnKeyType='next'
 				/>
 				<Separator height={23} />
 				<PasswordField
@@ -82,6 +85,7 @@ export function RegisterForm({onSubmit}: LoginFormProps) {
 					field='confirm_password'
 					showPassword={showPassword}
 					updatePassword={updatePassword}
+					returnKeyType='done'
 				/>
 				<Separator height={26} />
 				<SubmitButton textLabel='Submit' />

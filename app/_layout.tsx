@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {ThemeProvider} from '@react-navigation/native';
-import {Slot, useSegments} from 'expo-router';
+import {Slot} from 'expo-router';
 import {StatusBar} from 'expo-status-bar';
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -27,10 +27,6 @@ const customFonts = Object.assign({}, fonts, FontAwesome.font, Feather.font);
 
 export default function RootLayout() {
 	const [loaded, error] = useFonts(customFonts);
-
-	const seg = useSegments();
-
-	console.log({seg});
 
 	// Expo Router uses Error Boundaries to catch errors in the navigation tree.
 	React.useEffect(() => {
