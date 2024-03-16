@@ -45,5 +45,5 @@ expo-env.d.ts
 *.env
 
 #config
-google-services.json
-GoogleService-Info.plist
+assets/google-services.json
+assets/GoogleService-Info.plist
