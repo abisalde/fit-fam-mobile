@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input /> renders correctly with error message 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "height": 85,
+          "justifyContent": "center",
+          "marginVertical": 8,
+          "width": "100%",
+        },
+        undefined,
+        {
+          "borderColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexGrow": 1,
+            "paddingHorizontal": 6,
+          }
+        }
+      >
+        <TextInput
+          numberOfLines={1}
+          style={
+            [
+              {
+                "backgroundColor": undefined,
+                "color": undefined,
+                "fontFamily": "DMSansMedium",
+                "fontSize": 27,
+                "lineHeight": 36,
+              },
+              undefined,
+              {
+                "color": undefined,
+              },
+            ]
+          }
+          textAlign="left"
+          underlineColorAndroid="transparent"
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`<Input /> renders correctly with start and end adornments 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "height": 85,
+          "justifyContent": "center",
+          "marginVertical": 8,
+          "width": "100%",
+        },
+        undefined,
+        {
+          "borderColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        testID="start-endornment"
+      >
+        Start Endornment
+      </Text>
+      <View
+        style={
+          {
+            "flexGrow": 1,
+            "paddingHorizontal": 6,
+          }
+        }
+      >
+        <TextInput
+          numberOfLines={1}
+          style={
+            [
+              {
+                "backgroundColor": undefined,
+                "color": undefined,
+                "fontFamily": "DMSansMedium",
+                "fontSize": 27,
+                "lineHeight": 36,
+              },
+              undefined,
+              {
+                "color": undefined,
+              },
+            ]
+          }
+          textAlign="left"
+          underlineColorAndroid="transparent"
+        />
+      </View>
+      <Text
+        testID="end-endornment"
+      >
+        End Endornment
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`<Input /> renders correctly without error or touch 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "height": 85,
+          "justifyContent": "center",
+          "marginVertical": 8,
+          "width": "100%",
+        },
+        undefined,
+        {
+          "borderColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexGrow": 1,
+            "paddingHorizontal": 6,
+          }
+        }
+      >
+        <TextInput
+          numberOfLines={1}
+          style={
+            [
+              {
+                "backgroundColor": undefined,
+                "color": undefined,
+                "fontFamily": "DMSansMedium",
+                "fontSize": 27,
+                "lineHeight": 36,
+              },
+              undefined,
+              {
+                "color": undefined,
+              },
+            ]
+          }
+          textAlign="left"
+          underlineColorAndroid="transparent"
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;

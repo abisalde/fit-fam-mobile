@@ -1,0 +1,16 @@
+export default {
+	DMSansBlack: require('../../../assets/fonts/DMSans-Black.ttf'),
+	DMSansBlackItalic: require('../../../assets/fonts/DMSans-BlackItalic.ttf'),
+	DMSansBold: require('../../../assets/fonts/DMSans-Bold.ttf'),
+	DMSansBoldItalic: require('../../../assets/fonts/DMSans-BoldItalic.ttf'),
+	DMSansExtraBold: require('../../../assets/fonts/DMSans-ExtraBold.ttf'),
+	DMSansExtraBoldItalic: require('../../../assets/fonts/DMSans-ExtraBoldItalic.ttf'),
+	DMSansLight: require('../../../assets/fonts/DMSans-Light.ttf'),
+	DMSansMedium: require('../../../assets/fonts/DMSans-Medium.ttf'),
+	DMSansMediumItalic: require('../../../assets/fonts/DMSans-MediumItalic.ttf'),
+	DMSansRegular: require('../../../assets/fonts/DMSans-Regular.ttf'),
+	DMSansSemiBold: require('../../../assets/fonts/DMSans-SemiBold.ttf'),
+	DMSansSemiBoldItalic: require('../../../assets/fonts/DMSans-SemiBoldItalic.ttf'),
+	DMSansThin: require('../../../assets/fonts/DMSans-Thin.ttf'),
+	DMSansThinItalic: require('../../../assets/fonts/DMSans-ThinItalic.ttf'),
+};
