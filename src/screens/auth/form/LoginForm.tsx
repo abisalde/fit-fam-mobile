@@ -65,6 +65,8 @@ export function LoginForm({onSubmit}: LoginFormProps) {
 							style={styles.icon}
 						/>
 					}
+					keyboardType='email-address'
+					returnKeyType='next'
 				/>
 				<Separator height={23} />
 				<PasswordField
@@ -72,6 +74,7 @@ export function LoginForm({onSubmit}: LoginFormProps) {
 					field='password'
 					showPassword={showPassword}
 					updatePassword={updatePassword}
+					returnKeyType='done'
 				/>
 				<Separator height={26} />
 				<SubmitButton textLabel='Submit' />

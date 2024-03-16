@@ -1,29 +1,29 @@
 {
-  "project_info": {
-    "project_number": "974468869003",
-    "project_id": "fit-fam-mobile",
-    "storage_bucket": "fit-fam-mobile.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:974468869003:android:6815021d9eb9df9e41dd8e",
-        "android_client_info": {
-          "package_name": "com.abisalde.fittfammobile"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDozpxcaaVCkjBFE2ECX3ujz_AEl5zeoFg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+	"project_info": {
+		"project_number": "974468869003",
+		"project_id": "fit-fam-mobile",
+		"storage_bucket": "fit-fam-mobile.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:974468869003:android:6815021d9eb9df9e41dd8e",
+				"android_client_info": {
+					"package_name": "com.abisalde.fittfammobile"
+				}
+			},
+			"oauth_client": [],
+			"api_key": [
+				{
+					"current_key": "AIzaSyDozpxcaaVCkjBFE2ECX3ujz_AEl5zeoFg"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": []
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
 }
