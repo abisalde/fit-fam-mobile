@@ -1,16 +1,16 @@
 import * as React from 'react';
-
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
 /**
  * ? Local & Shared Imports
  */
-import {AppReducer, GlobalStateContext, initialState} from './global-reducer';
+import {LoadingFullScreen} from '@shared-components/loading-full-screen';
+
 import {getStorageItemAsync} from '@local-storage';
+import {AppReducer, GlobalStateContext, initialState} from './global-reducer';
+import {ACTIONS} from './reducer-actions';
 
 import {APP_GLOBAL_STATE} from '@shared-constants/app-config';
-import {ACTIONS} from './reducer-actions';
-import {ActivityIndicator} from 'react-native';
-import {palette} from '../shared/theme';
-import {View} from 'react-native';
 
 export const Provider = ({children}: React.PropsWithChildren) => {
 	const [state, dispatch] = React.useReducer(AppReducer, initialState);
@@ -40,20 +40,11 @@ export const Provider = ({children}: React.PropsWithChildren) => {
 
 	return (
 		<GlobalStateContext.Provider value={{state, dispatch}}>
-			{loading ? (
-				<View
-					style={{
-						flex: 1,
-						alignItems: 'center',
-						justifyContent: 'center',
-						backgroundColor: palette.borderColor,
-					}}
-				>
-					<ActivityIndicator animating color={palette.primary} size='large' />
-				</View>
-			) : (
-				children
-			)}
+			<GestureHandlerRootView style={{flex: 1}}>
+				<SafeAreaView style={{flex: 1}}>
+					{loading ? <LoadingFullScreen /> : children}
+				</SafeAreaView>
+			</GestureHandlerRootView>
 		</GlobalStateContext.Provider>
 	);
 };

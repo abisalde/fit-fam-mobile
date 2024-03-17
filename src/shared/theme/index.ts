@@ -32,7 +32,7 @@ export const palette: PaletteColors = {
 	borderColorDark: '#333942',
 	textPlaceholder: '#BDBDBD',
 	shadow: '#F5F5FF',
-	tabBgColor: '#F8F8F8',
+	tabBgColor: '#F1F1F1',
 	logoText: '#17395C',
 	purpleLight: 'rgba(93, 59, 240, 0.2)',
 	purpleD: '#928FFF',
