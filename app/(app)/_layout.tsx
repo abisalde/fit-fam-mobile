@@ -2,12 +2,16 @@ import * as React from 'react';
 /**
  * ? Local & Shared Imports
  */
-import {updateAppState, useGlobalState} from '@lib/global-reducer';
+import {
+	resetAppState,
+	updateAppState,
+	useGlobalState,
+} from '@lib/global-reducer';
 import {FITFAMAPP, onAuthStateChanged, userTypeProps} from '@utils/firebase';
 import {Redirect, Stack} from 'expo-router';
 
 export const unstable_settings = {
-	initialRouteName: '(app)',
+	initialRouteName: '(tabs)',
 };
 
 export default function RootLayoutNav() {
@@ -22,9 +26,11 @@ export default function RootLayoutNav() {
 		onAuthStateChanged(FITFAMAPP, (user) => {
 			if (user !== null) {
 				handleUpdateUser(user);
+			} else {
+				resetAppState(dispatch);
 			}
 		});
-	}, []);
+	}, [dispatch]);
 
 	if (!state.isAuthenticated) {
 		return <Redirect href='/sign-in' />;
@@ -34,7 +40,7 @@ export default function RootLayoutNav() {
 
 	return (
 		<Stack screenOptions={{headerShown: false}}>
-			<Stack.Screen name='index' />
+			<Stack.Screen name='(tabs)' />
 		</Stack>
 	);
 }

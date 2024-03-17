@@ -46,7 +46,7 @@ export default function RootLayout() {
 	return (
 		<Provider>
 			<ThemeProvider value={LightTheme}>
-				<Slot />
+				<Slot screenOptions={{headerShown: false}} />
 				<StatusBar style='dark' />
 			</ThemeProvider>
 		</Provider>
