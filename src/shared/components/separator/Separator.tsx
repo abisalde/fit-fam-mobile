@@ -1,11 +1,11 @@
-import {DimensionValue, StyleProp, View, ViewStyle} from 'react-native';
+import {DimensionValue, View} from 'react-native';
 
-type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+import type {ViewStyleProp} from '@types';
 
 type SeparatorProps = {
 	height?: number;
 	width?: number | DimensionValue;
-	style?: CustomStyleProp;
+	style?: ViewStyleProp;
 };
 
 export const Separator = ({

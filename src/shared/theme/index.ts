@@ -24,7 +24,7 @@ export const palette: PaletteColors = {
 	separator: 'rgb(194, 194, 195)',
 	highlight: 'rgb(199, 198, 203)',
 	blackOverlay: 'rgba(0,0,0,0.6)',
-	background: '#fcfdfe',
+	background: '#F5F7FB',
 	dynamicBackground: '#fff',
 	darkBg: '#00003D',
 	borderColor: '#BDBDBD',

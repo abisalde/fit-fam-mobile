@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet} from 'react-native';
+
 /**
  * ? Local & Shared Imports
  */
@@ -40,11 +41,15 @@ export const Provider = ({children}: React.PropsWithChildren) => {
 
 	return (
 		<GlobalStateContext.Provider value={{state, dispatch}}>
-			<GestureHandlerRootView style={{flex: 1}}>
-				<SafeAreaView style={{flex: 1}}>
-					{loading ? <LoadingFullScreen /> : children}
-				</SafeAreaView>
+			<GestureHandlerRootView style={styles.root}>
+				{loading ? <LoadingFullScreen /> : children}
 			</GestureHandlerRootView>
 		</GlobalStateContext.Provider>
 	);
 };
+
+const styles = StyleSheet.create({
+	root: {
+		flex: 1,
+	},
+});
