@@ -4,9 +4,6 @@ import {
 	View,
 	TextInput as RNInput,
 	TextInputProps as RNInputProps,
-	StyleProp,
-	ViewStyle,
-	TextStyle,
 } from 'react-native';
 
 /**
@@ -14,16 +11,15 @@ import {
  */
 import createStyles from './Input.styles';
 
-type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-type CustomTextStyle = StyleProp<TextStyle> | Array<StyleProp<TextStyle>>;
+import type {TextStyleProp, ViewStyleProp} from '@types';
 
 export type InputProps = {
 	error?: string;
 	endEndornment?: React.ReactNode;
 	touched?: boolean;
 	startEndornment?: React.ReactNode;
-	style?: CustomStyleProp;
-	inputStyle?: CustomTextStyle;
+	style?: ViewStyleProp;
+	inputStyle?: TextStyleProp;
 	borderError?: boolean;
 } & RNInputProps;
 

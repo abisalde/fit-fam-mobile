@@ -17,16 +17,15 @@ import createStyles from './Button.styles';
 import {Text} from '@shared-components/text-wrapper';
 import {FontKeys} from '@utils/font-keys';
 
-type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
-type CustomTextStyle = StyleProp<TextStyle> | Array<StyleProp<TextStyle>>;
+import type {TextStyleProp, ViewStyleProp} from '@types';
 
 export type ButtonProps = {
 	disabled?: boolean;
 	textLabel: string | React.ReactNode;
 	variant?: 'primary' | 'secondary';
 	loading?: boolean;
-	style?: CustomStyleProp;
-	textStyle?: CustomTextStyle;
+	style?: ViewStyleProp;
+	textStyle?: TextStyleProp;
 } & RNBounceProps;
 
 export const Button: React.FC<ButtonProps> = ({
@@ -76,8 +75,7 @@ export const Button: React.FC<ButtonProps> = ({
 					<Text
 						color={variant === 'primary' ? colors.white : colors.black}
 						center
-						fontFamily={FontKeys.DMSansMedium}
-						bold
+						fontFamily={FontKeys.DMSansSemiBold}
 						style={textLabelStyle}
 					>
 						{textLabel}
@@ -102,7 +100,7 @@ interface RNBounceProps extends PressableProps {
 	bouncinessIn?: number;
 	bouncinessOut?: number;
 	useNativeDriver?: boolean;
-	style?: CustomStyleProp;
+	style?: ViewStyleProp;
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
