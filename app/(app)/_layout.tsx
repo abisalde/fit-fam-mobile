@@ -1,14 +1,20 @@
 import * as React from 'react';
+import {Redirect, Stack} from 'expo-router';
 /**
  * ? Local & Shared Imports
  */
 import {
 	resetAppState,
 	updateAppState,
+	updateCurrentUser,
 	useGlobalState,
 } from '@lib/global-reducer';
-import {FITFAMAPP, onAuthStateChanged, userTypeProps} from '@utils/firebase';
-import {Redirect, Stack} from 'expo-router';
+import {
+	FITFAMAPP,
+	onAuthStateChanged,
+	type userTypeProps,
+	type userInfoType,
+} from '@utils/firebase';
 
 export const unstable_settings = {
 	initialRouteName: '(tabs)',
@@ -18,14 +24,18 @@ export default function RootLayoutNav() {
 	const {dispatch, state} = useGlobalState();
 
 	const handleUpdateUser = React.useCallback(
-		(user: userTypeProps) => updateAppState(dispatch, user),
+		(user: userInfoType, currentUser: userTypeProps) => {
+			updateAppState(dispatch, user);
+			updateCurrentUser(dispatch, currentUser);
+		},
 		[dispatch]
 	);
 
 	React.useEffect(() => {
 		onAuthStateChanged(FITFAMAPP, (user) => {
 			if (user !== null) {
-				handleUpdateUser(user);
+				const {providerData = []} = user ?? {};
+				handleUpdateUser(providerData[0], user);
 			} else {
 				resetAppState(dispatch);
 			}
@@ -34,7 +44,7 @@ export default function RootLayoutNav() {
 
 	if (!state.isAuthenticated) {
 		return <Redirect href='/sign-in' />;
-	} else if (!state.User?.emailVerified) {
+	} else if (state && !state.currentUser?.emailVerified) {
 		return <Redirect href='/verify-email' />;
 	}
 

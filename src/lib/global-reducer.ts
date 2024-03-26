@@ -5,7 +5,12 @@ import * as React from 'react';
  */
 import {ACTIONS, Action, AppState} from './reducer-actions';
 
-import {FITFAMAPP, signOut, type userTypeProps} from '@utils/firebase';
+import {
+	FITFAMAPP,
+	signOut,
+	userTypeProps,
+	type userInfoType,
+} from '@utils/firebase';
 import {APP_GLOBAL_STATE} from '@shared-constants/app-config';
 import {setStorageItemAsync} from '@local-storage';
 
@@ -13,6 +18,7 @@ export const initialState: AppState = {
 	isAuthenticated: false,
 	User: null,
 	last_updated: Date.now(),
+	currentUser: null,
 };
 
 export const GlobalStateContext = React.createContext<{
@@ -37,6 +43,10 @@ export const AppReducer = (state: AppState, action: Action): AppState => {
 		case ACTIONS.RESET_STATE:
 			return resetAppStateAndStorage();
 
+		case ACTIONS.CURRENT_USER:
+			const currentUser = action.payload;
+			return Object.assign({}, state, {currentUser});
+
 		default:
 			return state;
 	}
@@ -46,7 +56,7 @@ export const useGlobalState = () => React.useContext(GlobalStateContext);
 
 export const updateAppState = (
 	dispatch: React.Dispatch<Action>,
-	user: userTypeProps
+	user: userInfoType
 ) => dispatch({type: ACTIONS.UPDATE_USER, payload: user});
 
 export const resetAppState = (dispatch: React.Dispatch<Action>) => {
@@ -56,8 +66,13 @@ export const resetAppState = (dispatch: React.Dispatch<Action>) => {
 
 export const loginUser = (
 	dispatch: React.Dispatch<Action>,
-	user: userTypeProps
+	user: userInfoType
 ) => dispatch({type: ACTIONS.LOGIN_STATE, payload: user});
+
+export const updateCurrentUser = (
+	dispatch: React.Dispatch<Action>,
+	user: userTypeProps
+) => dispatch({type: ACTIONS.CURRENT_USER, payload: user});
 
 const updateAppStateAndStorage = (
 	state: AppState,

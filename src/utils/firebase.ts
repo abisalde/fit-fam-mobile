@@ -2,12 +2,13 @@
 import {initializeApp} from 'firebase/app';
 
 import {
-	User,
 	onAuthStateChanged,
 	signOut,
 	updateProfile,
 	getReactNativePersistence,
 	initializeAuth,
+	type User,
+	type UserInfo,
 } from 'firebase/auth';
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore';
 import {
@@ -59,3 +60,4 @@ export {
 };
 
 export type userTypeProps = User;
+export type userInfoType = UserInfo;

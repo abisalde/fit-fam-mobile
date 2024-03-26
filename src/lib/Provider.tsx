@@ -8,7 +8,12 @@ import {StyleSheet} from 'react-native';
 import {LoadingFullScreen} from '@shared-components/loading-full-screen';
 
 import {getStorageItemAsync} from '@local-storage';
-import {AppReducer, GlobalStateContext, initialState} from './global-reducer';
+import {
+	AppReducer,
+	GlobalStateContext,
+	initialState,
+	resetAppState,
+} from './global-reducer';
 import {ACTIONS} from './reducer-actions';
 
 import {APP_GLOBAL_STATE} from '@shared-constants/app-config';
@@ -27,7 +32,11 @@ export const Provider = ({children}: React.PropsWithChildren) => {
 					: null;
 
 				if (storedState) {
-					dispatch({type: ACTIONS.LOGIN_STATE, payload: storedState.User});
+					if (!storedState.isAuthenticated || storedState.User === undefined) {
+						resetAppState(dispatch);
+					} else {
+						dispatch({type: ACTIONS.LOGIN_STATE, payload: storedState.User});
+					}
 				}
 			} catch (error) {
 				console.error('Error initializing app state from storage:', error);
@@ -37,7 +46,7 @@ export const Provider = ({children}: React.PropsWithChildren) => {
 		};
 
 		initializeAppState();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<GlobalStateContext.Provider value={{state, dispatch}}>

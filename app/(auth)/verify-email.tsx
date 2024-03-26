@@ -22,16 +22,16 @@ export default function VerifyEmail() {
 	const [timer, setTimer] = React.useState<boolean>(true);
 	const [countdown, setCountdown] = React.useState<number>(60);
 
-	const {state, dispatch} = useGlobalState();
+	const {dispatch, state} = useGlobalState();
 
 	const {email = ''} = useLocalSearchParams();
 
 	const resendEmail = React.useCallback(
 		(e: GestureResponderEvent) => {
 			e.preventDefault();
-			const user = state.User;
 
-			if (user !== null) {
+			if (state.currentUser !== null) {
+				const user = state.currentUser;
 				sendEmailVerification(user);
 				setTimer(true);
 
@@ -41,19 +41,20 @@ export default function VerifyEmail() {
 				);
 			}
 		},
-		[state.User]
+		[state.currentUser]
 	);
 
-	if (email && email.length === 0) return <Redirect href='/sign-in' />;
+	if (!email) return <Redirect href='/sign-in' />;
 
 	React.useEffect(() => {
 		let intervalId: ReturnType<typeof setInterval>;
 
 		intervalId = setInterval(() => {
-			state.User?.reload()
+			state.currentUser
+				?.reload()
 				.then(() => {
-					if (state.User?.emailVerified) {
-						loginUser(dispatch, state.User);
+					if (state.currentUser?.emailVerified) {
+						loginUser(dispatch, state.currentUser?.providerData[0]);
 						clearInterval(intervalId);
 						setTimeout(() => {
 							router.navigate('/');
@@ -67,7 +68,7 @@ export default function VerifyEmail() {
 		}, 1000);
 
 		return () => clearInterval(intervalId);
-	}, [state.User]);
+	}, [state.currentUser]);
 
 	React.useEffect(() => {
 		let intervalTimer: ReturnType<typeof setInterval>;
@@ -80,8 +81,8 @@ export default function VerifyEmail() {
 			setTimer(false);
 			setCountdown(60);
 
-			if (state.User?.emailVerified) {
-				loginUser(dispatch, state.User);
+			if (state.currentUser?.emailVerified) {
+				loginUser(dispatch, state.currentUser?.providerData[0]);
 				setTimeout(() => {
 					router.navigate('/');
 				}, 800);

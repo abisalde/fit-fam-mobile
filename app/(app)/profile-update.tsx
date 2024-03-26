@@ -1,10 +1,5 @@
-import {ScreenWrapper} from '@shared-components/screen-wrapper';
-import {Text} from 'react-native';
+import {ProfileUpdate as ProfileUpdateScreen} from '@screens/profile';
 
 export default function ProfileUpdate() {
-	return (
-		<ScreenWrapper>
-			<Text>ProfileUpdate</Text>
-		</ScreenWrapper>
-	);
+	return <ProfileUpdateScreen />;
 }

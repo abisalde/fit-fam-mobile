@@ -75,6 +75,8 @@ export const DashboardScreen = () => {
 						textStyle={styles.textButtonStyle}
 					/>
 				</Card>
+
+				<Button textLabel='logout' onPress={handleLogout} />
 			</ScrollView>
 		</View>
 	);

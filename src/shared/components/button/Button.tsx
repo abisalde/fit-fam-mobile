@@ -106,10 +106,10 @@ interface RNBounceProps extends PressableProps {
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 interface IState {
-	bounceValue: any;
+	bounceValue: Animated.Value;
 }
 
-class RNBounce extends React.Component<RNBounceProps, IState> {
+export class RNBounce extends React.Component<RNBounceProps, IState> {
 	constructor(props: RNBounceProps) {
 		super(props);
 		this.state = {
