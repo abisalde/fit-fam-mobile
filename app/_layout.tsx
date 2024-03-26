@@ -6,6 +6,7 @@ import {Slot} from 'expo-router';
 import {StatusBar} from 'expo-status-bar';
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import 'react-native-get-random-values';
 
 /**
  * ? Local & Shared Imports

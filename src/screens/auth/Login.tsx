@@ -41,7 +41,7 @@ export function LoginScreen() {
 				sendEmailVerification(result.user);
 				return; // Early return
 			} else {
-				loginUser(dispatch, result.user);
+				loginUser(dispatch, result.user.providerData[0]);
 				router.navigate('/');
 			}
 		} catch (error: any) {

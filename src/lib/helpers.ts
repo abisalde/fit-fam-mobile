@@ -1,4 +1,6 @@
 export const maskEmail = (email: string): string => {
+	if (typeof email !== 'string') return '';
+
 	const [local, domain] = email.split('@');
 
 	let emailId = '';
