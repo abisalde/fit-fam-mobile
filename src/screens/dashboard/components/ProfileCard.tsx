@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, ActivityIndicator} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LinearGradient} from 'expo-linear-gradient';
 
@@ -13,11 +13,47 @@ import {AnimatedCircularProgress} from '@shared-components/AnimatedCircularProgr
 import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
 
+import {FontKeys} from '@utils/font-keys';
 import {SCREEN_HEIGHT, pixelSizeVertical, scaledPixel} from '@utils/normalize';
 import {palette} from '@app-theme';
-import {FontKeys} from '@utils/font-keys';
+import {UserCollectionType} from '@types';
 
-export const ProfileCard: React.FC = () => {
+interface ProfileCardProps {
+	user?: UserCollectionType;
+	loading: boolean;
+}
+
+export const ProfileCard: React.FC<ProfileCardProps> = ({loading, user}) => {
+	const transformValues = React.useMemo(() => {
+		const defaultValues = {
+			image: 'https://i.imgur.com/7gYHZpF.jpeg',
+			first_name: 'John',
+			last_name: 'Doe',
+			progress: 0,
+			completed: 0,
+		};
+
+		if (!user) return defaultValues;
+
+		return {
+			image: user.image ?? defaultValues.image,
+			first_name: user.first_name ?? defaultValues.first_name,
+			last_name: user.last_name ?? defaultValues.last_name,
+			progress:
+				user.image && user.first_name !== undefined
+					? 1
+					: user.first_name === undefined
+					? 0.2
+					: 0.7,
+			completed:
+				user.image && user.first_name !== undefined
+					? 100
+					: user.first_name === undefined
+					? 20
+					: 70,
+		};
+	}, [user]);
+
 	return (
 		<SafeAreaView style={styles.root}>
 			<LinearGradient
@@ -27,18 +63,26 @@ export const ProfileCard: React.FC = () => {
 				style={styles.gradient}
 			/>
 			<View style={styles.container}>
-				<AnimatedCircularProgress
-					size={125}
-					strokeWidth={6}
-					progressState={0.7}
-					circleStrokeColor={palette.transparent}
-				>
-					<Image
-						source={{uri: 'https://picsum.photos/200/300'}}
-						resizeMode='cover'
-						style={styles.image}
+				{loading ? (
+					<ActivityIndicator
+						animating={true}
+						size='large'
+						color={palette.gradientOne}
 					/>
-				</AnimatedCircularProgress>
+				) : (
+					<AnimatedCircularProgress
+						size={125}
+						strokeWidth={6}
+						progressState={transformValues.progress}
+						circleStrokeColor={palette.transparent}
+					>
+						<Image
+							source={{uri: transformValues.image}}
+							resizeMode='cover'
+							style={styles.image}
+						/>
+					</AnimatedCircularProgress>
+				)}
 				<Separator height={75} />
 				<Text
 					style={styles.username}
@@ -46,16 +90,20 @@ export const ProfileCard: React.FC = () => {
 					color={palette.white}
 					center
 				>
-					John Doe
+					{loading
+						? 'Loading...'
+						: `${transformValues.first_name} ${transformValues.last_name}`}
 				</Text>
-				<Text
-					h5
-					fontFamily={FontKeys.DMSansMedium}
-					color={palette.white}
-					center
-				>
-					Profile is 5% completed
-				</Text>
+				{!loading && transformValues.completed !== 100 && (
+					<Text
+						h5
+						fontFamily={FontKeys.DMSansMedium}
+						color={palette.white}
+						center
+					>
+						Profile is {transformValues.completed}% completed
+					</Text>
+				)}
 			</View>
 		</SafeAreaView>
 	);
@@ -89,5 +137,6 @@ const styles = StyleSheet.create({
 	username: {
 		fontSize: scaledPixel(25),
 		lineHeight: scaledPixel(32),
+		textTransform: 'capitalize',
 	},
 });

@@ -31,13 +31,13 @@ import {
 	updateProfile,
 	getDoc,
 	uploadBytesResumable,
-	currentUser,
 } from '@utils/firebase';
 
 import {FontKeys} from '@utils/font-keys';
 import {COLLECTIONS_NAME} from '@types';
 
 import {iOS} from '@shared-constants/app-config';
+import {useGlobalState} from '@lib/global-reducer';
 
 interface AvatarUploadProps {
 	imageUri?: string | null;
@@ -58,6 +58,8 @@ const defaultOptions: UpdateOptions = {
 export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 	imageUri = null,
 }) => {
+	const {state} = useGlobalState();
+
 	const theme = useTheme();
 	const {colors} = theme;
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -155,7 +157,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
 			const avatarRef = ref(
 				storageBucket,
-				`${COLLECTIONS_NAME.IMAGE}::${currentUser?.email}:::${uuidv4()}`
+				`${COLLECTIONS_NAME.IMAGE}&${state.User?.email}&${uuidv4()}`
 			);
 			const result = uploadBytesResumable(avatarRef, imageBlob);
 
@@ -182,31 +184,36 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 				() => {
 					getDownloadURL(result.snapshot.ref).then(
 						async (url): Promise<void> => {
-							console.log({url});
-
 							try {
-								if (currentUser) {
-									updateProfile(currentUser, {
+								if (state.currentUser) {
+									updateProfile(state.currentUser, {
 										photoURL: url,
 									});
 
 									const docRef = doc(
 										database,
 										COLLECTIONS_NAME.USERS,
-										currentUser.uid
+										state.currentUser.uid
 									);
+
 									const docRefSnap = await getDoc(docRef);
 
 									if (docRefSnap.exists()) {
 										await setDoc(docRef, {image: url}, {merge: true});
 									} else {
-										await setDoc(docRef, {image: url, id: currentUser.uid});
+										await setDoc(docRef, {
+											image: url,
+											user_id: state.currentUser.uid,
+										});
 									}
 
 									setImageAvatar(url);
 								}
 							} catch (error) {
-								console.log({error}, 'HERE::::::::');
+								Alert.alert(
+									'Upload Error 😢️',
+									'Image failed to upload, please try again ' + error
+								);
 							} finally {
 								setUpdateOptions(defaultOptions);
 								setVisible(false);
@@ -218,14 +225,22 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
 			// imageBlob?.close();
 		} catch (error) {
-			console.log({error});
+			throw error;
 		}
 	}, [avatar]);
 
 	return (
 		<View style={styles.avatarUploadRoot}>
-			<Separator height={40} />
+			<Separator height={15} />
 
+			<Text
+				center
+				h5
+				fontFamily={FontKeys.DMSansSemiBold}
+				color={colors.success}
+			>{`${
+				updateOptions.loading ? `Uploading (${updateOptions.progress})%` : ''
+			}`}</Text>
 			<View style={styles.avatarContainer}>
 				{!avatar ? (
 					<Text color={colors.dark} fontFamily={FontKeys.DMSansMedium} center>
@@ -271,11 +286,7 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 					<Separator height={16} />
 					<Button
 						onPress={uploadImage}
-						textLabel={`Upload your avatar ${
-							updateOptions.loading
-								? `Uploading (${updateOptions.progress})`
-								: ''
-						}`}
+						textLabel='Upload your avatar'
 						style={styles.uploadButton}
 						disabled={!avatar}
 						loading={updateOptions.loading}

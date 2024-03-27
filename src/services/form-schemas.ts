@@ -53,15 +53,44 @@ export const LoginFormSchema: Yup.Schema<LoginFormType> = Yup.object().shape({
 
 export const ProfileUpdateSchema: Yup.Schema<ProfileUpdateType> =
 	Yup.object().shape({
-		company_name: Yup.string()
+		first_name: Yup.string()
 			.trim()
-			.min(3, 'Organization name must be more than 3 characters')
-			.max(50, 'Organization must not be more than 50 characters')
-			.required('Organization name is required')
-			.label('Organization name'),
-		logo: Yup.string().label('Organization logo'),
-		phone: Yup.string()
-			.matches(/^(\+?44|0)(\d{10}|\d{9})$/, 'Invalid UK Phone Number')
+			.matches(
+				/^[A-Za-z]+$/,
+				'First name must contain only alphabetic characters'
+			)
+			.min(3, 'First name must be more than 3 letters')
+			.max(30, 'First name must not be more than 30 characters')
+			.required('First name is required')
+			.label('First name'),
+
+		last_name: Yup.string()
+			.trim()
+			.matches(
+				/^[A-Za-z]+$/,
+				'Last name must contain only alphabetic characters'
+			)
+			.min(3, 'Last name must be more than 3 letters')
+			.max(30, 'Last name must not be more than 30 characters')
+			.required('Last name is required')
+			.label('Last name'),
+
+		username: Yup.string()
+			.trim()
+			.lowercase()
+			.matches(
+				/^[a-zA-Z0-9]+$/,
+				'Username must contain only alphanumeric characters'
+			)
+			.min(3, 'Username must be more than 3 characters')
+			.max(50, 'Username must not be more than 50 characters')
+			.required('Username is required')
+			.label('Username'),
+
+		phone_number: Yup.string()
+			.min(10, 'Phone number must be at least 10 digits')
+			.max(11, 'Phone number must not be more than 11 digits')
+			.matches(/^\d+$/, 'Phone number must contain only numbers')
 			.label('Phone Number'),
 	});
 

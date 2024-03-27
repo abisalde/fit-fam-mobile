@@ -44,13 +44,14 @@ export default function RootLayoutNav() {
 
 	if (!state.isAuthenticated) {
 		return <Redirect href='/sign-in' />;
-	} else if (state && !state.currentUser?.emailVerified) {
-		return <Redirect href='/verify-email' />;
 	}
 
 	return (
 		<Stack screenOptions={{headerShown: false}}>
 			<Stack.Screen name='(tabs)' />
+			<Stack.Screen name='profile' />
+			<Stack.Screen name='profile-update' options={{presentation: 'modal'}} />
+			<Stack.Screen name='profile-edit' options={{presentation: 'modal'}} />
 		</Stack>
 	);
 }

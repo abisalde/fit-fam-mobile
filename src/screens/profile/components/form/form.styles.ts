@@ -1,7 +1,11 @@
 import {ExtendedTheme} from '@react-navigation/native';
 
-import {fontPixel, heightPixel, pixelSizeHorizontal} from '@utils/normalize';
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {
+	heightPixel,
+	pixelSizeHorizontal,
+	pixelSizeVertical,
+} from '@utils/normalize';
+import {ImageStyle, StyleSheet, ViewStyle} from 'react-native';
 
 interface Style {
 	avatarUploadRoot: ViewStyle;
@@ -11,9 +15,8 @@ interface Style {
 	avatarModalContainer: ViewStyle;
 	avatar: ImageStyle;
 	uploadButton: ViewStyle;
-	headerTitle: TextStyle;
-	empty: ViewStyle;
-	textLabel: TextStyle;
+	formContainerRoot: ViewStyle;
+	formContentContainer: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -66,13 +69,12 @@ export default (theme: ExtendedTheme) => {
 			height: '100%',
 			borderRadius: 100,
 		},
-		headerTitle: {
-			fontSize: fontPixel(20),
+		formContainerRoot: {
+			flex: 1,
 		},
-		empty: {
-			width: pixelSizeHorizontal(55),
+		formContentContainer: {
+			flex: 1,
+			paddingBottom: pixelSizeVertical(30),
 		},
-		container: {},
-		textLabel: {},
 	});
 };
