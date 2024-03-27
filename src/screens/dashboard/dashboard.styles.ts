@@ -6,7 +6,7 @@ interface Style {
 	root: ViewStyle;
 	container: ViewStyle;
 	scrollRoot: ViewStyle;
-	profileUpdateCard: ViewStyle;
+	cardView: ViewStyle;
 	textButtonStyle: TextStyle;
 }
 
@@ -29,7 +29,7 @@ export default (theme: ExtendedTheme) => {
 		container: {
 			backgroundColor: colors.background,
 		},
-		profileUpdateCard: {
+		cardView: {
 			padding: 20,
 			width: '100%',
 		},

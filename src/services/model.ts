@@ -10,8 +10,10 @@ export type LoginFormType = {
 };
 
 export type ProfileUpdateType = {
-	company_name: string;
-	logo?: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	phone_number?: string;
 	phone?: string;
 };
 

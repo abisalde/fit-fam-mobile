@@ -10,7 +10,14 @@ import {
 	type User,
 	type UserInfo,
 } from 'firebase/auth';
-import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore';
+import {
+	addDoc,
+	getFirestore,
+	doc,
+	getDoc,
+	setDoc,
+	collection as DBCollection,
+} from 'firebase/firestore';
 import {
 	getStorage,
 	ref,
@@ -44,7 +51,9 @@ const database = getFirestore(app);
 const storageBucket = getStorage(app);
 
 export {
+	addDoc,
 	database,
+	DBCollection,
 	FITFAMAPP,
 	onAuthStateChanged,
 	signOut,

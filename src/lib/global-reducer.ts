@@ -79,7 +79,11 @@ const updateAppStateAndStorage = (
 	newState: Partial<AppState>
 ): AppState => {
 	const updatedState = {...state, ...newState};
-	setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(updatedState));
+
+	if (updatedState.currentUser) {
+		const {currentUser, ...rest} = updatedState;
+		setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(rest));
+	}
 	return updatedState;
 };
 

@@ -10,6 +10,8 @@ interface Style {
 	container: ViewStyle;
 	empty: ViewStyle;
 	textLabel: TextStyle;
+	profileUpdateCard: ViewStyle;
+	textButtonStyle: TextStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -32,5 +34,12 @@ export default (theme: ExtendedTheme) => {
 		},
 		container: {},
 		textLabel: {},
+		profileUpdateCard: {
+			padding: 20,
+			width: '100%',
+		},
+		textButtonStyle: {
+			textTransform: 'uppercase',
+		},
 	});
 };
