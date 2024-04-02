@@ -17,9 +17,11 @@ import {UserCollectionType} from '@types';
 interface UpdateProfileCardProps {
 	onPress: (e: GestureResponderEvent) => void;
 	user?: UserCollectionType;
+	loading?: boolean;
 }
 
 export const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({
+	loading = false,
 	onPress,
 	user,
 }) => {
@@ -27,7 +29,8 @@ export const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({
 	const {colors} = theme;
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
 
-	return typeof user === 'undefined' || user?.first_name === undefined ? (
+	return loading ? null : typeof user === 'undefined' ||
+	  user?.first_name === undefined ? (
 		<Card style={styles.profileUpdateCard}>
 			<Text left color={colors.dark} fontFamily={FontKeys.DMSansSemiBold} h3>
 				Update your profile

@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingHorizontal: pixelSizeHorizontal(26),
 		width: '100%',
+		backgroundColor: 'white',
 	},
 	instructionText: {
 		fontSize: fontPixel(16),

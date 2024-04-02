@@ -1,5 +1,5 @@
-import {ProfileUpdate as ProfileUpdateScreen} from '@screens/profile';
+import {ProfileUpdate} from '@screens/profile';
 
-export default function ProfileUpdate() {
-	return <ProfileUpdateScreen />;
+export default function ProfileUpdateScreen() {
+	return <ProfileUpdate />;
 }
