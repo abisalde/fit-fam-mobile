@@ -1,6 +1,6 @@
 import {ExtendedTheme} from '@react-navigation/native';
 
-import {fontPixel, pixelSizeHorizontal} from '@utils/normalize';
+import {fontPixel, heightPixel, pixelSizeHorizontal} from '@utils/normalize';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface Style {
@@ -19,6 +19,7 @@ export default (theme: ExtendedTheme) => {
 	return StyleSheet.create<Style>({
 		root: {
 			backgroundColor: colors.background,
+			flex: 1,
 		},
 		profileScreenHeader: {
 			flexDirection: 'row',
@@ -32,7 +33,9 @@ export default (theme: ExtendedTheme) => {
 		empty: {
 			width: pixelSizeHorizontal(55),
 		},
-		container: {},
+		container: {
+			paddingTop: heightPixel(20),
+		},
 		textLabel: {},
 		profileUpdateCard: {
 			padding: 20,

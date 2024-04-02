@@ -198,13 +198,18 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
 									const docRefSnap = await getDoc(docRef);
 
-									if (docRefSnap.exists()) {
-										await setDoc(docRef, {image: url}, {merge: true});
-									} else {
-										await setDoc(docRef, {
-											image: url,
+									const userObject = Object.assign(
+										{},
+										{image: url},
+										{
 											user_id: state.currentUser.uid,
-										});
+										}
+									);
+
+									if (docRefSnap.exists()) {
+										await setDoc(docRef, userObject, {merge: true});
+									} else {
+										await setDoc(docRef, userObject);
 									}
 
 									setImageAvatar(url);

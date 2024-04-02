@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTheme} from '@react-navigation/native';
 import {router} from 'expo-router';
-
+import {ScrollView} from 'react-native-gesture-handler';
 import {GestureResponderEvent, View} from 'react-native';
 /**
  * ? Local & Shared Imports
@@ -16,11 +16,12 @@ import {FontKeys} from '@utils/font-keys';
 
 interface ProfileScreenLayoutProps {
 	headerTitle: string;
+	isIndex?: boolean;
 }
 
 export const ProfileScreenLayout: React.FC<
 	ProfileScreenLayoutProps & React.PropsWithChildren
-> = ({children, headerTitle}) => {
+> = ({children, headerTitle, isIndex = false}) => {
 	const theme = useTheme();
 	const {colors} = theme;
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -28,9 +29,13 @@ export const ProfileScreenLayout: React.FC<
 	const goBack = React.useCallback(
 		(e: GestureResponderEvent) => {
 			e.stopPropagation();
-			router.back();
+			if (isIndex) {
+				router.push('/');
+			} else {
+				router.push('../');
+			}
 		},
-		[router]
+		[isIndex]
 	);
 
 	return (
@@ -47,7 +52,14 @@ export const ProfileScreenLayout: React.FC<
 				</Text>
 				<View style={styles.empty} />
 			</View>
-			{children}
+			<ScrollView
+				style={styles.root}
+				showsVerticalScrollIndicator={false}
+				horizontal={false}
+				contentContainerStyle={styles.container}
+			>
+				{children}
+			</ScrollView>
 		</ScreenWrapper>
 	);
 };

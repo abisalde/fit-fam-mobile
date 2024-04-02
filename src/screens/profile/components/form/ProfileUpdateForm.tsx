@@ -52,7 +52,8 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 }) => {
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
-	const {setSearchOptions} = useUsernameSearch();
+	const {setSearchOptions, searchUsername} = useUsernameSearch();
+	const [usernameValue, setUsernameValue] = React.useState<string>('');
 
 	const isUpdating = option === 'update';
 
@@ -72,38 +73,54 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 			actions: FormikHelpers<ProfileUpdateType>
 		) => {
 			if (currentUser) {
+				const username = values.username;
 				try {
-					updateProfile(currentUser, {
-						displayName: values.username,
-					});
+					const isValid = await searchUsername(username);
 
-					const docRef = doc(database, COLLECTIONS_NAME.USERS, currentUser.uid);
+					if (!isValid) {
+						throw new Error('Username already exist');
+					} else if (isValid) {
+						updateProfile(currentUser, {
+							displayName: username,
+						});
 
-					const docRefSnap = await getDoc(docRef);
+						const docRef = doc(
+							database,
+							COLLECTIONS_NAME.USERS,
+							currentUser.uid
+						);
 
-					await addDoc(DBCollection(database, COLLECTIONS_NAME.USERNAMES), {
-						username: values.username,
-					});
+						const docRefSnap = await getDoc(docRef);
 
-					if (docRefSnap.exists()) {
-						await setDoc(docRef, values, {merge: true});
-					} else {
-						await setDoc(docRef, values);
+						await addDoc(DBCollection(database, COLLECTIONS_NAME.USERNAMES), {
+							username,
+						});
+
+						const userObject = Object.assign({}, values, {
+							user_id: currentUser.uid,
+						});
+
+						if (docRefSnap.exists()) {
+							await setDoc(docRef, userObject, {merge: true});
+						} else {
+							await setDoc(docRef, userObject);
+						}
+						router.push('../');
 					}
-					router.push('/(app)/profile');
 				} catch (error) {
 					Alert.alert(
 						`${option === 'update' ? 'Updating' : 'Editing'} Profile`,
-						'There was an error ' + error
+						'There was an ' + error
 					);
 				} finally {
 					actions.resetForm();
 					actions.setSubmitting(false);
 					setSearchOptions({error: '', isValid: false});
+					setUsernameValue('');
 				}
 			}
 		},
-		[]
+		[setSearchOptions]
 	);
 
 	return (
@@ -121,6 +138,8 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 						<UsernameSearchField
 							field='username'
 							placeholder='Username'
+							usernameValue={usernameValue}
+							setUsernameValue={setUsernameValue}
 							returnKeyType='next'
 						/>
 						<Separator height={10} />

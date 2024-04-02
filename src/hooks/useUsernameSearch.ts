@@ -30,27 +30,33 @@ export const useUsernameSearch = () => {
 	const [searchOptions, setSearchOptions] =
 		React.useState<SearchStateOptions>(initialState);
 
-	const searchUsername = React.useCallback(async (val: string) => {
-		const text = val?.toLocaleLowerCase();
+	const searchUsername = React.useCallback(
+		async (val: string): Promise<boolean> => {
+			const text = val?.trim()?.toLocaleLowerCase();
 
-		try {
-			const docQuery = query(
-				DBCollection(database, COLLECTIONS_NAME.USERNAMES),
-				where('username', '==', text)
-			);
+			try {
+				const docQuery = query(
+					DBCollection(database, COLLECTIONS_NAME.USERNAMES),
+					where('username', '==', text)
+				);
 
-			const querySnapshot = await getDocs(docQuery);
-			const usernameExist = !querySnapshot.empty;
+				const querySnapshot = await getDocs(docQuery);
+				const usernameExist = !querySnapshot.empty;
 
-			if (usernameExist) {
-				setSearchOptions((prev) => ({...prev, error: message}));
-			} else {
-				setSearchOptions({error: '', isValid: true});
+				if (usernameExist) {
+					setSearchOptions((prev) => ({...prev, error: message}));
+					return false;
+				} else {
+					setSearchOptions({error: '', isValid: true});
+					return true;
+				}
+			} catch (error) {
+				console.log('Error', error);
+				return false;
 			}
-		} catch (error) {
-			console.log('Error', error);
-		}
-	}, []);
+		},
+		[]
+	);
 
 	return {
 		searchOptions,
