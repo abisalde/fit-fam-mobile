@@ -31,27 +31,35 @@ export const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({
 
 	return loading ? null : typeof user === 'undefined' ||
 	  user?.first_name === undefined ? (
-		<Card style={styles.profileUpdateCard}>
-			<Text left color={colors.dark} fontFamily={FontKeys.DMSansSemiBold} h3>
-				Update your profile
-			</Text>
-			<Separator height={16} />
-			<Text center h2 color={colors.primary} fontFamily={FontKeys.DMSansMedium}>
-				Welcome to FITFAM Community 👋️
-			</Text>
-			<Separator height={10} />
-			<Text center color={colors.grey3}>
-				You can start by updating your profile
-			</Text>
-			<Separator height={18} />
+		<>
+			<Card style={styles.profileUpdateCard}>
+				<Text left color={colors.dark} fontFamily={FontKeys.DMSansSemiBold} h3>
+					Update your profile
+				</Text>
+				<Separator height={16} />
+				<Text
+					center
+					h2
+					color={colors.primary}
+					fontFamily={FontKeys.DMSansMedium}
+				>
+					Welcome to FITFAM Community 👋️
+				</Text>
+				<Separator height={10} />
+				<Text center color={colors.grey3}>
+					You can start by updating your profile
+				</Text>
+				<Separator height={18} />
 
-			<Button
-				onPress={onPress}
-				accessibilityRole='button'
-				accessibilityLabel='Navigate to update your profile'
-				textLabel='Update now'
-				textStyle={styles.textButtonStyle}
-			/>
-		</Card>
+				<Button
+					onPress={onPress}
+					accessibilityRole='button'
+					accessibilityLabel='Navigate to update your profile'
+					textLabel='Update now'
+					textStyle={styles.textButtonStyle}
+				/>
+			</Card>
+			<Separator height={20} />
+		</>
 	) : null;
 };
