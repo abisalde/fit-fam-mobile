@@ -36,12 +36,12 @@ export const DashboardScreen = () => {
 	};
 
 	return (
-		<View style={styles.root}>
+		<View style={styles.root} key={Date.now().toString()}>
 			<ProfileCard loading={isLoading} user={user} />
 			<Separator height={10} />
 			<ScrollView
 				style={styles.scrollRoot}
-				contentContainerStyle={{}}
+				contentContainerStyle={styles.scrollContentView}
 				horizontal={false}
 				showsVerticalScrollIndicator={false}
 				refreshControl={

@@ -46,5 +46,5 @@ expo-env.d.ts
 
 
 # Ignore Google services configuration files
-assets/google-services.json
-assets/GoogleService-Info.plist
+./assets/google-services.json
+./assets/GoogleService-Info.plist

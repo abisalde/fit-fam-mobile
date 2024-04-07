@@ -11,18 +11,11 @@ import {useUsernameSearch} from '@hooks';
 
 import {type FormFieldProps} from './FormField';
 
-interface UsernameSearchFieldProps extends FormFieldProps {
-	usernameValue: string;
-	setUsernameValue: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export const UsernameSearchField: React.FC<UsernameSearchFieldProps> = ({
+export const UsernameSearchField: React.FC<FormFieldProps> = ({
 	field,
-	usernameValue,
-	setUsernameValue,
 	...rest
 }) => {
-	const {errors, handleChange, handleBlur, touched, setFieldError} =
+	const {errors, handleChange, handleBlur, touched, setFieldError, values} =
 		useFormikContext<FormikValues>();
 
 	const {searchOptions, searchUsername} = useUsernameSearch();
@@ -35,7 +28,6 @@ export const UsernameSearchField: React.FC<UsernameSearchFieldProps> = ({
 
 	const handleSearch = React.useCallback(
 		async (val: string) => {
-			setUsernameValue(val?.toLocaleLowerCase());
 			await searchUsername(val);
 
 			if (!searchOptions.isValid) {
@@ -51,9 +43,12 @@ export const UsernameSearchField: React.FC<UsernameSearchFieldProps> = ({
 		<>
 			<Input
 				error={error}
-				onChangeText={handleSearch}
+				onChangeText={(val) => {
+					handleChange(field)(val?.toLocaleLowerCase());
+					handleSearch(val);
+				}}
 				onBlur={handleBlur(field)}
-				value={usernameValue}
+				value={values[field]}
 				touched={Boolean(touched[field])}
 				borderError={visible || searchOptions.error.length > 0}
 				{...rest}

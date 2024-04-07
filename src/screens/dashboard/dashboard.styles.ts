@@ -1,4 +1,5 @@
 import {ExtendedTheme} from '@react-navigation/native';
+import {pixelSizeVertical} from '@utils/normalize';
 
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
@@ -6,6 +7,7 @@ interface Style {
 	root: ViewStyle;
 	container: ViewStyle;
 	scrollRoot: ViewStyle;
+	scrollContentView: ViewStyle;
 	cardView: ViewStyle;
 	textButtonStyle: TextStyle;
 }
@@ -25,6 +27,9 @@ export default (theme: ExtendedTheme) => {
 			width: '100%',
 			marginTop: -85,
 			paddingHorizontal: 16,
+		},
+		scrollContentView: {
+			paddingBottom: pixelSizeVertical(25),
 		},
 		container: {
 			backgroundColor: colors.background,

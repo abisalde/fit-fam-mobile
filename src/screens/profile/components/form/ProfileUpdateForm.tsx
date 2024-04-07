@@ -35,7 +35,7 @@ import {
 } from '@utils/firebase';
 import {useUsernameSearch} from '@hooks';
 
-import {COLLECTIONS_NAME} from '@types';
+import {COLLECTIONS_NAME, type UserCollectionType} from '@types';
 
 import {ProfileUpdateSchema} from '@services/form-schemas';
 import {ProfileUpdateType} from '@services/model';
@@ -44,25 +44,29 @@ import {iOS} from '@shared-constants/app-config';
 interface ProfileUpdateFormProps {
 	currentUser: userTypeProps | null;
 	option: 'update' | 'edit';
+	user?: UserCollectionType;
+	refresh: () => void;
 }
 
 export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 	currentUser,
 	option,
+	user,
+	refresh,
 }) => {
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
 	const {setSearchOptions, searchUsername} = useUsernameSearch();
-	const [usernameValue, setUsernameValue] = React.useState<string>('');
 
 	const isUpdating = option === 'update';
+	const unEditable = option === 'edit';
 
 	const initialState = React.useMemo(
 		() => ({
-			first_name: isUpdating ? '' : '',
-			last_name: isUpdating ? '' : '',
-			username: isUpdating ? '' : '',
-			phone: isUpdating ? '' : '',
+			first_name: isUpdating ? '' : user?.first_name ?? '',
+			last_name: isUpdating ? '' : user?.last_name ?? '',
+			username: isUpdating ? '' : user?.username ?? '',
+			phone: isUpdating ? '' : user?.phone ?? '',
 		}),
 		[]
 	);
@@ -73,40 +77,39 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 			actions: FormikHelpers<ProfileUpdateType>
 		) => {
 			if (currentUser) {
-				const username = values.username;
+				const username = values.username?.toLocaleLowerCase();
 				try {
-					const isValid = await searchUsername(username);
+					if (!unEditable) {
+						const isValid = await searchUsername(username);
+						if (!isValid) throw new Error('Username already exists');
+					}
 
-					if (!isValid) {
-						throw new Error('Username already exist');
-					} else if (isValid) {
-						updateProfile(currentUser, {
-							displayName: username,
-						});
+					updateProfile(currentUser, {
+						displayName: username,
+					});
 
-						const docRef = doc(
-							database,
-							COLLECTIONS_NAME.USERS,
-							currentUser.uid
-						);
+					const docRef = doc(database, COLLECTIONS_NAME.USERS, currentUser.uid);
+					const userDocSnap = await getDoc(docRef);
+					const userExists = userDocSnap.exists();
 
-						const docRefSnap = await getDoc(docRef);
-
+					if (!unEditable) {
 						await addDoc(DBCollection(database, COLLECTIONS_NAME.USERNAMES), {
 							username,
 						});
-
-						const userObject = Object.assign({}, values, {
-							user_id: currentUser.uid,
-						});
-
-						if (docRefSnap.exists()) {
-							await setDoc(docRef, userObject, {merge: true});
-						} else {
-							await setDoc(docRef, userObject);
-						}
-						router.push('../');
 					}
+
+					const userObject = Object.assign({}, values, {
+						user_id: currentUser.uid,
+						username,
+					});
+
+					const setDocOptions = userExists ? {merge: true} : {};
+					await setDoc(docRef, userObject, setDocOptions);
+
+					setTimeout(() => {
+						router.push('../');
+						refresh();
+					}, 750);
 				} catch (error) {
 					Alert.alert(
 						`${option === 'update' ? 'Updating' : 'Editing'} Profile`,
@@ -116,11 +119,10 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 					actions.resetForm();
 					actions.setSubmitting(false);
 					setSearchOptions({error: '', isValid: false});
-					setUsernameValue('');
 				}
 			}
 		},
-		[setSearchOptions]
+		[refresh, setSearchOptions]
 	);
 
 	return (
@@ -138,9 +140,8 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 						<UsernameSearchField
 							field='username'
 							placeholder='Username'
-							usernameValue={usernameValue}
-							setUsernameValue={setUsernameValue}
 							returnKeyType='next'
+							editable={unEditable ? false : true}
 						/>
 						<Separator height={10} />
 						<FormField
