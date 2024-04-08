@@ -1,4 +1,5 @@
 import {ExtendedTheme} from '@react-navigation/native';
+import {pixelSizeHorizontal} from '@utils/normalize';
 
 import {StyleSheet, ViewStyle} from 'react-native';
 
@@ -12,7 +13,7 @@ export default (theme: ExtendedTheme) => {
 		root: {
 			flex: 1,
 			backgroundColor: colors.background,
-			padding: 16,
+			paddingHorizontal: pixelSizeHorizontal(16),
 		},
 	});
 };

@@ -27,14 +27,21 @@ export const useUserDetails = (): [UserCollectionStateType, () => void] => {
 		user: undefined,
 	});
 
-	const fetchUser = async () => {
+	const fetchUser = React.useCallback(async () => {
+		if (!state.currentUser) return; // Don't execute function
+
 		try {
 			const getData = query(
 				DBCollection(database, COLLECTIONS_NAME.USERS),
-				where('user_id', '==', state.currentUser?.uid)
+				where('user_id', '==', state.currentUser.uid)
 			);
 
 			const querySnapShot = await getDocs(getData);
+
+			if (querySnapShot.empty) {
+				return; // Stop here and don't execute further
+			}
+
 			const userData = querySnapShot.docs.map((doc) => ({
 				id: doc.id,
 				...doc.data(),
@@ -51,12 +58,7 @@ export const useUserDetails = (): [UserCollectionStateType, () => void] => {
 		} finally {
 			setUserOption((prev) => ({...prev, isLoading: false}));
 		}
-	};
-
-	const refresh = () => {
-		setUserOption((prev) => ({...prev, isLoading: true}));
-		fetchUser();
-	};
+	}, [state.currentUser]);
 
 	React.useEffect(() => {
 		let isMounted = true;
@@ -70,5 +72,5 @@ export const useUserDetails = (): [UserCollectionStateType, () => void] => {
 		};
 	}, [state.currentUser]);
 
-	return [userOption, refresh];
+	return [userOption, fetchUser];
 };

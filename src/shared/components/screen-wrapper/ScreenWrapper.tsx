@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useTheme} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {StatusBar} from 'expo-status-bar';
 /**
  * ? Local & Shared Imports
  */
@@ -19,10 +18,6 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
 }) => {
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
-	return (
-		<SafeAreaView style={[styles.root, style]}>
-			<StatusBar style='dark' />
-			{children}
-		</SafeAreaView>
-	);
+
+	return <SafeAreaView style={[styles.root, style]}>{children}</SafeAreaView>;
 };

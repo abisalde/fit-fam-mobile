@@ -16,7 +16,7 @@ import {Separator} from '@shared-components/separator';
 
 export const ProfileEdit: React.FC = () => {
 	const {state} = useGlobalState();
-	const [{user}, refresh] = useUserDetails();
+	const [{user}] = useUserDetails();
 
 	return (
 		<ProfileScreenLayout headerTitle='Edit Profile'>
@@ -26,7 +26,6 @@ export const ProfileEdit: React.FC = () => {
 				currentUser={state.currentUser}
 				option='edit'
 				user={user}
-				refresh={refresh}
 			/>
 		</ProfileScreenLayout>
 	);

@@ -45,14 +45,12 @@ interface ProfileUpdateFormProps {
 	currentUser: userTypeProps | null;
 	option: 'update' | 'edit';
 	user?: UserCollectionType;
-	refresh: () => void;
 }
 
 export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 	currentUser,
 	option,
 	user,
-	refresh,
 }) => {
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -106,10 +104,7 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 					const setDocOptions = userExists ? {merge: true} : {};
 					await setDoc(docRef, userObject, setDocOptions);
 
-					setTimeout(() => {
-						router.push('../');
-						refresh();
-					}, 750);
+					router.push('../');
 				} catch (error) {
 					Alert.alert(
 						`${option === 'update' ? 'Updating' : 'Editing'} Profile`,
@@ -122,7 +117,7 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 				}
 			}
 		},
-		[refresh, setSearchOptions]
+		[setSearchOptions]
 	);
 
 	return (
