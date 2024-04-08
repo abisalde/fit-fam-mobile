@@ -5,6 +5,7 @@ export type AppState = {
 	isAuthenticated: boolean;
 	User: null | userInfoType;
 	last_updated: number;
+	seenOnboarding: boolean;
 };
 
 export enum ACTIONS {
@@ -12,6 +13,7 @@ export enum ACTIONS {
 	RESET_STATE = 'RESET_APP_STATE',
 	LOGIN_STATE = 'LOGIN_APP_USER',
 	CURRENT_USER = 'CURRENT_USER',
+	SEEN_ONBOARDING = 'USER_SEEN_ONBOARDING',
 }
 
 export type Action =
@@ -21,4 +23,5 @@ export type Action =
 	  }
 	| {type: ACTIONS.RESET_STATE}
 	| {type: ACTIONS.LOGIN_STATE; payload: userInfoType}
-	| {type: ACTIONS.CURRENT_USER; payload: userTypeProps};
+	| {type: ACTIONS.CURRENT_USER; payload: userTypeProps}
+	| {type: ACTIONS.SEEN_ONBOARDING; payload: boolean};

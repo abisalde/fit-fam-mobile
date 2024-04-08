@@ -32,6 +32,10 @@ export const Provider = ({children}: React.PropsWithChildren) => {
 					: null;
 
 				if (storedState) {
+					dispatch({
+						type: ACTIONS.SEEN_ONBOARDING,
+						payload: storedState.seenOnboarding,
+					});
 					if (!storedState.isAuthenticated || storedState.User === undefined) {
 						resetAppState(dispatch);
 					} else {

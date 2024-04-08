@@ -2,7 +2,7 @@ import * as React from 'react';
 import {GestureResponderEvent, View} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
-import {router} from 'expo-router';
+import {router, useFocusEffect} from 'expo-router';
 
 /**
  * ? Local & Shared Imports
@@ -30,13 +30,19 @@ export const DashboardScreen = () => {
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
 
+	const remount = React.useCallback(() => {
+		refresh();
+	}, []);
+
+	useFocusEffect(remount);
+
 	const navigateToProfileUpdate = (e: GestureResponderEvent) => {
 		e.stopPropagation();
 		router.navigate('/(app)/profile-update');
 	};
 
 	return (
-		<View style={styles.root} key={Date.now().toString()}>
+		<View style={styles.root}>
 			<ProfileCard loading={isLoading} user={user} />
 			<Separator height={10} />
 			<ScrollView

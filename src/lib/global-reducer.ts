@@ -19,6 +19,7 @@ export const initialState: AppState = {
 	User: null,
 	last_updated: Date.now(),
 	currentUser: null,
+	seenOnboarding: false,
 };
 
 export const GlobalStateContext = React.createContext<{
@@ -41,11 +42,26 @@ export const AppReducer = (state: AppState, action: Action): AppState => {
 			});
 
 		case ACTIONS.RESET_STATE:
-			return resetAppStateAndStorage();
+			return {
+				...state,
+				User: null,
+				currentUser: null,
+				last_updated: Date.now(),
+				isAuthenticated: false,
+			};
 
 		case ACTIONS.CURRENT_USER:
 			const currentUser = action.payload;
-			return Object.assign({}, state, {currentUser});
+			return {
+				...state,
+				currentUser,
+			};
+
+		case ACTIONS.SEEN_ONBOARDING:
+			return updateAppStateAndStorage(state, {
+				seenOnboarding: action.payload,
+				last_updated: Date.now(),
+			});
 
 		default:
 			return state;
@@ -74,6 +90,11 @@ export const updateCurrentUser = (
 	user: userTypeProps
 ) => dispatch({type: ACTIONS.CURRENT_USER, payload: user});
 
+export const updateUserOnboarding = (
+	dispatch: React.Dispatch<Action>,
+	status: boolean
+) => dispatch({type: ACTIONS.SEEN_ONBOARDING, payload: status});
+
 const updateAppStateAndStorage = (
 	state: AppState,
 	newState: Partial<AppState>
@@ -83,11 +104,8 @@ const updateAppStateAndStorage = (
 	if (updatedState.currentUser) {
 		const {currentUser, ...rest} = updatedState;
 		setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(rest));
+	} else {
+		setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(updatedState));
 	}
 	return updatedState;
-};
-
-const resetAppStateAndStorage = (): AppState => {
-	setStorageItemAsync(APP_GLOBAL_STATE, null);
-	return initialState;
 };

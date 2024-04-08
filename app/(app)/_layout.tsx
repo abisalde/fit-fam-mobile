@@ -42,9 +42,8 @@ export default function RootLayoutNav() {
 		});
 	}, [dispatch]);
 
-	if (!state.isAuthenticated) {
-		return <Redirect href='/sign-in' />;
-	}
+	if (!state.seenOnboarding) return <Redirect href='/onboarding' />;
+	else if (!state.isAuthenticated) return <Redirect href='/sign-in' />;
 
 	return (
 		<Stack screenOptions={{headerShown: false}}>
