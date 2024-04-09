@@ -93,11 +93,11 @@ export default function VerifyEmail() {
 
 	return (
 		<View style={styles.root}>
-			<Text center fontFamily='DMSansBold' h2 color={palette.black}>
+			<Text center fontFamily='DMSansSemiBold' h2 color={palette.black}>
 				Verify your Email Address
 			</Text>
 			<Separator height={12} />
-			<Text center fontFamily='DMSansSemiBold' h4 color={palette.primary}>
+			<Text center fontFamily='DMSansBold' h4 color={palette.primary}>
 				Kindly check your email {`${maskEmail(email.toString())}`} for a
 				verification link
 			</Text>
