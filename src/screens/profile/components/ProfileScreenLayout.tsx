@@ -9,11 +9,9 @@ import {GestureResponderEvent, View} from 'react-native';
 import createStyles from './component.styles';
 
 import {BackButton} from '@shared-components/BackButton';
+import {Separator} from '@shared-components/separator';
 import {ScreenWrapper} from '@shared-components/screen-wrapper';
 import {Text} from '@shared-components/text-wrapper';
-
-import {FontKeys} from '@utils/font-keys';
-import {Separator} from '@shared-components/separator';
 
 interface ProfileScreenLayoutProps {
 	headerTitle: string;
@@ -47,7 +45,7 @@ export const ProfileScreenLayout: React.FC<
 				<Text
 					style={styles.headerTitle}
 					color={colors.dark}
-					fontFamily={FontKeys.DMSansSemiBold}
+					fontFamily='DMSansSemiBold'
 					center
 				>
 					{headerTitle}

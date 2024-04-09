@@ -7,7 +7,6 @@ import {useTheme} from '@react-navigation/native';
  */
 import {Text} from '@shared-components/text-wrapper';
 import {fontPixel} from '@utils/normalize';
-import {FontKeys} from '@utils/font-keys';
 
 interface IErrorMessageProps {
 	error: string;
@@ -25,7 +24,7 @@ const ErrorMessage: React.FC<IErrorMessageProps> = ({error, visible}) => {
 			h5
 			color={colors.error}
 			style={styles.textStyle}
-			fontFamily={FontKeys.DMSansMedium}
+			fontFamily='DMSansMedium'
 		>
 			{error}
 		</Text>

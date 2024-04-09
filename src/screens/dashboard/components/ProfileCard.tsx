@@ -20,7 +20,6 @@ import {AnimatedCircularProgress} from '@shared-components/AnimatedCircularProgr
 import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
 
-import {FontKeys} from '@utils/font-keys';
 import {SCREEN_HEIGHT, pixelSizeVertical, scaledPixel} from '@utils/normalize';
 import {palette} from '@app-theme';
 import {UserCollectionType} from '@types';
@@ -107,7 +106,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({loading, user}) => {
 
 						<Text
 							style={styles.username}
-							fontFamily={FontKeys.DMSansSemiBold}
+							fontFamily='DMSansSemiBold'
 							color={palette.white}
 							center
 						>
@@ -116,12 +115,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({loading, user}) => {
 					</TouchableOpacity>
 				)}
 				{!loading && transformValues.completed !== 100 && (
-					<Text
-						h5
-						fontFamily={FontKeys.DMSansMedium}
-						color={palette.white}
-						center
-					>
+					<Text h5 fontFamily='DMSansMedium' color={palette.white} center>
 						Profile is {transformValues.completed}% completed
 					</Text>
 				)}

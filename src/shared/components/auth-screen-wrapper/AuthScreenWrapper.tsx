@@ -15,7 +15,6 @@ import createStyles from './AuthScreenWrapper.styles';
 
 import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
-import {FontKeys} from '@utils/font-keys';
 
 import FitFamLogo from '@resources/images/fitfamlogogrey.svg';
 
@@ -53,14 +52,14 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 				<View style={styles.root}>
 					<View style={styles.container}>
 						<Text
-							fontFamily={FontKeys.DMSansSemiBold}
+							fontFamily='DMSansSemiBold'
 							color={colors.primary}
 							style={styles.title}
 						>
 							{title}
 						</Text>
 						<Text
-							fontFamily={FontKeys.DMSansRegular}
+							fontFamily='DMSansMedium'
 							color={colors.grey3}
 							style={styles.subtitle}
 						>
@@ -72,7 +71,7 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 							<View style={styles.footerTop}>
 								<Text
 									center
-									fontFamily={FontKeys.DMSansMedium}
+									fontFamily='DMSansMedium'
 									style={styles.terms}
 									color={colors.grey3}
 								>
@@ -84,7 +83,7 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 										accessibilityLabel={`Navigate to ${label}`}
 										color={colors.primary}
 										center
-										fontFamily={FontKeys.DMSansBold}
+										fontFamily='DMSansBold'
 										style={[styles.terms, styles.footerTopText]}
 									>
 										{label}
@@ -96,22 +95,19 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 								<>
 									<Text
 										center
-										fontFamily={FontKeys.DMSansMedium}
+										fontFamily='DMSansMedium'
 										style={styles.terms}
 										color={colors.grey3}
 									>
 										By Continuing, you agree to{' '}
-										<Text
-											color={colors.grey1}
-											fontFamily={FontKeys.DMSansSemiBold}
-										>
+										<Text color={colors.grey1} fontFamily='DMSansSemiBold'>
 											FITFAM&apos;s
 										</Text>
 									</Text>
 									<Text
 										color={colors.primary}
 										center
-										fontFamily={FontKeys.DMSansBold}
+										fontFamily='DMSansBold'
 										style={styles.terms}
 									>
 										Terms and Agreement

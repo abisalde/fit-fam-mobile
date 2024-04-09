@@ -19,7 +19,6 @@ import {useGlobalState} from '@lib/global-reducer';
 
 import {useUserDetails} from '@hooks';
 import {Text} from '@shared-components/text-wrapper';
-import {FontKeys} from '@utils/font-keys';
 
 export const DashboardScreen = () => {
 	const {dispatch} = useGlobalState();
@@ -59,7 +58,7 @@ export const DashboardScreen = () => {
 				/>
 
 				<Card style={styles.cardView}>
-					<Text left fontFamily={FontKeys.DMSansSemiBold} h3>
+					<Text left fontFamily='DMSansSemiBold' h3>
 						Daily Goals
 					</Text>
 					<Separator height={22} />

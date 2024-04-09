@@ -33,7 +33,6 @@ import {
 	uploadBytesResumable,
 } from '@utils/firebase';
 
-import {FontKeys} from '@utils/font-keys';
 import {COLLECTIONS_NAME} from '@types';
 
 import {iOS} from '@shared-constants/app-config';
@@ -240,17 +239,12 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 		<View style={styles.avatarUploadRoot}>
 			<Separator height={15} />
 
-			<Text
-				center
-				h5
-				fontFamily={FontKeys.DMSansSemiBold}
-				color={colors.success}
-			>{`${
+			<Text center h5 fontFamily='DMSansSemiBold' color={colors.success}>{`${
 				updateOptions.loading ? `Uploading (${updateOptions.progress})%` : ''
 			}`}</Text>
 			<View style={styles.avatarContainer}>
 				{!avatar ? (
-					<Text color={colors.dark} fontFamily={FontKeys.DMSansMedium} center>
+					<Text color={colors.dark} fontFamily='DMSansMedium' center>
 						Upload a picture
 					</Text>
 				) : (
