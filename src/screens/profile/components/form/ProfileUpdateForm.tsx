@@ -40,6 +40,7 @@ import {COLLECTIONS_NAME, type UserCollectionType} from '@types';
 import {ProfileUpdateSchema} from '@services/form-schemas';
 import {ProfileUpdateType} from '@services/model';
 import {iOS} from '@shared-constants/app-config';
+import {LoadingFullScreen} from '@shared-components/loading-full-screen';
 
 interface ProfileUpdateFormProps {
 	currentUser: userTypeProps | null;
@@ -53,8 +54,10 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 	user,
 }) => {
 	const theme = useTheme();
+	const {colors} = theme;
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
 	const {setSearchOptions, searchUsername} = useUsernameSearch();
+	const [loading, setLoading] = React.useState(true);
 
 	const isUpdating = option === 'update';
 	const unEditable = option === 'edit';
@@ -66,7 +69,7 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 			username: isUpdating ? '' : user?.username ?? '',
 			phone: isUpdating ? '' : user?.phone ?? '',
 		}),
-		[]
+		[user]
 	);
 
 	const handleFormSubmit = React.useCallback(
@@ -120,45 +123,65 @@ export const ProfileUpdateForm: React.FC<ProfileUpdateFormProps> = ({
 		[setSearchOptions]
 	);
 
+	React.useEffect(() => {
+		if (isUpdating) {
+			setLoading(false);
+			return;
+		}
+
+		if (user && unEditable) {
+			setLoading(false);
+			return;
+		}
+	}, [user, isUpdating, unEditable]);
+
 	return (
 		<KeyboardAvoidingView
 			style={styles.formContainerRoot}
 			behavior={iOS ? 'padding' : 'height'}
 		>
 			<View style={styles.formContentContainer}>
+				<Separator height={10} />
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-					<FormContainer
-						initialValues={initialState}
-						validationSchema={ProfileUpdateSchema}
-						onSubmit={handleFormSubmit}
-					>
-						<UsernameSearchField
-							field='username'
-							placeholder='Username'
-							returnKeyType='next'
-							editable={unEditable ? false : true}
-						/>
-						<Separator height={10} />
-						<FormField
-							field='first_name'
-							placeholder='First Name'
-							returnKeyType='next'
-						/>
-						<Separator height={10} />
-						<FormField
-							field='last_name'
-							placeholder='Last Name'
-							returnKeyType='next'
-						/>
-						<Separator height={10} />
-						<FormField
-							field='phone'
-							placeholder='Phone Number (optional)'
-							returnKeyType='done'
-						/>
-						<Separator height={25} />
-						<SubmitButton textLabel='Update Profile' />
-					</FormContainer>
+					{loading ? (
+						<LoadingFullScreen />
+					) : (
+						<FormContainer
+							initialValues={initialState}
+							validationSchema={ProfileUpdateSchema}
+							onSubmit={handleFormSubmit}
+						>
+							<UsernameSearchField
+								field='username'
+								placeholder='Username'
+								returnKeyType='next'
+								editable={unEditable ? false : true}
+								inputStyle={{color: unEditable ? colors.grey3 : colors.black}}
+							/>
+							<Separator height={10} />
+							<FormField
+								field='first_name'
+								placeholder='First Name'
+								returnKeyType='next'
+							/>
+							<Separator height={10} />
+							<FormField
+								field='last_name'
+								placeholder='Last Name'
+								returnKeyType='next'
+							/>
+							<Separator height={10} />
+							<FormField
+								field='phone'
+								placeholder='Phone Number (optional)'
+								returnKeyType='done'
+							/>
+							<Separator height={25} />
+							<SubmitButton
+								textLabel={`${isUpdating ? 'Update' : 'Edit'} Profile`}
+							/>
+						</FormContainer>
+					)}
 				</TouchableWithoutFeedback>
 			</View>
 		</KeyboardAvoidingView>

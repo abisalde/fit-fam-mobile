@@ -234,6 +234,8 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 		}
 	}, [avatar]);
 
+	const disabledBtn = Boolean(avatar) && avatar?.includes('https://');
+
 	return (
 		<View style={styles.avatarUploadRoot}>
 			<Separator height={15} />
@@ -291,9 +293,15 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 					<Separator height={16} />
 					<Button
 						onPress={uploadImage}
-						textLabel='Upload your avatar'
-						style={styles.uploadButton}
-						disabled={!avatar}
+						textLabel={`${
+							disabledBtn
+								? 'Choose or Capture Image to Upload'
+								: 'Upload your avatar'
+						}`}
+						style={{
+							backgroundColor: disabledBtn ? colors.grey4 : colors.success,
+						}}
+						disabled={!avatar || disabledBtn}
 						loading={updateOptions.loading}
 					/>
 					<Separator height={28} />

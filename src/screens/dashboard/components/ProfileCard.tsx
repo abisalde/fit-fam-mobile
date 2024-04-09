@@ -1,7 +1,15 @@
 import * as React from 'react';
-import {StyleSheet, View, Image, ActivityIndicator} from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Image,
+	ActivityIndicator,
+	TouchableOpacity,
+	GestureResponderEvent,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {LinearGradient} from 'expo-linear-gradient';
+import {router} from 'expo-router';
 
 /**
  *
@@ -9,7 +17,6 @@ import {LinearGradient} from 'expo-linear-gradient';
  */
 
 import {AnimatedCircularProgress} from '@shared-components/AnimatedCircularProgress';
-
 import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
 
@@ -54,6 +61,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({loading, user}) => {
 		};
 	}, [user]);
 
+	const navigateLink = React.useCallback(
+		(e: GestureResponderEvent) => {
+			e.stopPropagation();
+			router.push(user?.first_name ? '/profile' : '/(app)/profile-update');
+		},
+		[user]
+	);
+
 	return (
 		<SafeAreaView style={styles.root}>
 			<LinearGradient
@@ -70,30 +85,36 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({loading, user}) => {
 						color={palette.gradientOne}
 					/>
 				) : (
-					<AnimatedCircularProgress
-						size={125}
-						strokeWidth={6}
-						progressState={transformValues.progress}
-						circleStrokeColor={palette.transparent}
+					<TouchableOpacity
+						accessibilityLabel='Navigate to profile'
+						accessibilityRole='button'
+						activeOpacity={0.65}
+						onPress={navigateLink}
 					>
-						<Image
-							source={{uri: transformValues.image}}
-							resizeMode='cover'
-							style={styles.image}
-						/>
-					</AnimatedCircularProgress>
+						<AnimatedCircularProgress
+							size={125}
+							strokeWidth={6}
+							progressState={transformValues.progress}
+							circleStrokeColor={palette.transparent}
+						>
+							<Image
+								source={{uri: transformValues.image}}
+								resizeMode='cover'
+								style={styles.image}
+							/>
+						</AnimatedCircularProgress>
+						<Separator height={75} />
+
+						<Text
+							style={styles.username}
+							fontFamily={FontKeys.DMSansSemiBold}
+							color={palette.white}
+							center
+						>
+							{`${transformValues.first_name} ${transformValues.last_name}`}
+						</Text>
+					</TouchableOpacity>
 				)}
-				<Separator height={75} />
-				<Text
-					style={styles.username}
-					fontFamily={FontKeys.DMSansSemiBold}
-					color={palette.white}
-					center
-				>
-					{loading
-						? 'Loading...'
-						: `${transformValues.first_name} ${transformValues.last_name}`}
-				</Text>
 				{!loading && transformValues.completed !== 100 && (
 					<Text
 						h5

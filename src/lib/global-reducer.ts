@@ -63,6 +63,9 @@ export const AppReducer = (state: AppState, action: Action): AppState => {
 				last_updated: Date.now(),
 			});
 
+		case ACTIONS.RESET_APP:
+			return resetAppStateAndStorage();
+
 		default:
 			return state;
 	}
@@ -108,4 +111,14 @@ const updateAppStateAndStorage = (
 		setStorageItemAsync(APP_GLOBAL_STATE, JSON.stringify(updatedState));
 	}
 	return updatedState;
+};
+
+export const resetApp = (dispatch: React.Dispatch<Action>) => {
+	dispatch({type: ACTIONS.RESET_APP});
+	signOut(FITFAMAPP);
+};
+
+const resetAppStateAndStorage = (): AppState => {
+	setStorageItemAsync(APP_GLOBAL_STATE, null);
+	return initialState;
 };

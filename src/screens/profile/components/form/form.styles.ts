@@ -14,7 +14,6 @@ interface Style {
 	avatarModalRoot: ViewStyle;
 	avatarModalContainer: ViewStyle;
 	avatar: ImageStyle;
-	uploadButton: ViewStyle;
 	formContainerRoot: ViewStyle;
 	formContentContainer: ViewStyle;
 }
@@ -60,9 +59,6 @@ export default (theme: ExtendedTheme) => {
 			borderTopRightRadius: 25,
 			paddingHorizontal: pixelSizeHorizontal(16),
 			paddingBottom: heightPixel(30),
-		},
-		uploadButton: {
-			backgroundColor: colors.success,
 		},
 		avatar: {
 			width: '100%',

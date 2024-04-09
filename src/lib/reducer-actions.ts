@@ -14,6 +14,7 @@ export enum ACTIONS {
 	LOGIN_STATE = 'LOGIN_APP_USER',
 	CURRENT_USER = 'CURRENT_USER',
 	SEEN_ONBOARDING = 'USER_SEEN_ONBOARDING',
+	RESET_APP = 'RESET_APP',
 }
 
 export type Action =
@@ -24,4 +25,5 @@ export type Action =
 	| {type: ACTIONS.RESET_STATE}
 	| {type: ACTIONS.LOGIN_STATE; payload: userInfoType}
 	| {type: ACTIONS.CURRENT_USER; payload: userTypeProps}
-	| {type: ACTIONS.SEEN_ONBOARDING; payload: boolean};
+	| {type: ACTIONS.SEEN_ONBOARDING; payload: boolean}
+	| {type: ACTIONS.RESET_APP};

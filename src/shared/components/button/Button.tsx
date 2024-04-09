@@ -45,7 +45,6 @@ export const Button: React.FC<ButtonProps> = ({
 	const buttonContainerStyle: StyleProp<ViewStyle> = React.useMemo(
 		() => [
 			styles.container,
-			style,
 			{
 				backgroundColor:
 					variant === 'primary'
@@ -54,12 +53,13 @@ export const Button: React.FC<ButtonProps> = ({
 							: colors.primary
 						: colors.grey5,
 			},
+			style,
 		],
 		[variant, disabled]
 	);
 
 	const textLabelStyle: StyleProp<TextStyle> = React.useMemo(
-		() => [styles.textLabel, textStyle],
+		() => [styles.textLabel, , textStyle],
 		[variant, textStyle]
 	);
 
