@@ -32,8 +32,7 @@ export const useUsernameSearch = () => {
 
 	const searchUsername = React.useCallback(
 		async (val: string): Promise<boolean> => {
-			const text = val?.trim()?.toLocaleLowerCase();
-
+			const text = val.trim().toLowerCase();
 			try {
 				const docQuery = query(
 					DBCollection(database, COLLECTIONS_NAME.USERNAMES),
