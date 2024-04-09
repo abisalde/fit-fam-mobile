@@ -3,6 +3,7 @@ import {initializeApp} from 'firebase/app';
 
 import {
 	onAuthStateChanged,
+	deleteUser,
 	signOut,
 	updateProfile,
 	getReactNativePersistence,
@@ -14,6 +15,7 @@ import {
 	addDoc,
 	getFirestore,
 	doc,
+	deleteDoc,
 	getDoc,
 	setDoc,
 	collection as DBCollection,
@@ -24,6 +26,7 @@ import {
 	uploadBytes,
 	getDownloadURL,
 	uploadBytesResumable,
+	deleteObject,
 } from 'firebase/storage';
 
 /**
@@ -66,6 +69,9 @@ export {
 	updateProfile,
 	ref,
 	storageBucket,
+	deleteDoc,
+	deleteObject,
+	deleteUser,
 };
 
 export type userTypeProps = User;

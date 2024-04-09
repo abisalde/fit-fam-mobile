@@ -7,9 +7,11 @@ import RNText, {IRNTextProps} from '@freakycoder/react-native-custom-text';
  */
 import {FontKeys} from '@utils/font-keys';
 
+type FontKeysType = keyof typeof FontKeys;
+
 interface ITextWrapperProps extends IRNTextProps {
 	color?: string;
-	fontFamily?: string;
+	fontFamily?: FontKeysType;
 	children?: React.ReactNode;
 }
 

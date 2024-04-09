@@ -13,6 +13,7 @@ import {ScreenWrapper} from '@shared-components/screen-wrapper';
 import {Text} from '@shared-components/text-wrapper';
 
 import {FontKeys} from '@utils/font-keys';
+import {Separator} from '@shared-components/separator';
 
 interface ProfileScreenLayoutProps {
 	headerTitle: string;
@@ -40,6 +41,7 @@ export const ProfileScreenLayout: React.FC<
 
 	return (
 		<ScreenWrapper style={styles.root}>
+			<Separator height={12} />
 			<View style={styles.profileScreenHeader}>
 				<BackButton onPress={goBack} />
 				<Text

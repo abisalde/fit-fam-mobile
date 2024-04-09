@@ -15,7 +15,7 @@ import {Button} from '@shared-components/button';
 import {Card} from '@shared-components/card';
 import {Separator} from '@shared-components/separator';
 
-import {resetAppState, useGlobalState} from '@lib/global-reducer';
+import {useGlobalState} from '@lib/global-reducer';
 
 import {useUserDetails} from '@hooks';
 import {Text} from '@shared-components/text-wrapper';
@@ -24,8 +24,6 @@ import {FontKeys} from '@utils/font-keys';
 export const DashboardScreen = () => {
 	const {dispatch} = useGlobalState();
 	const [{user, isLoading}, refresh] = useUserDetails();
-
-	const handleLogout = () => resetAppState(dispatch);
 
 	const theme = useTheme();
 	const styles = React.useMemo(() => createStyles(theme), [theme]);
@@ -104,7 +102,6 @@ export const DashboardScreen = () => {
 					<Separator height={20} />
 				</Card>
 				<Separator height={25} />
-				<Button textLabel='logout' onPress={handleLogout} />
 			</ScrollView>
 		</View>
 	);

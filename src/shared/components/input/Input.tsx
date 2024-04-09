@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> = ({
 							underlineColorAndroid='transparent'
 							textAlign='left'
 							placeholderTextColor={colors.textPlaceholder}
-							style={[styles.inputFontStyle, inputStyle, {color: colors.grey}]}
+							style={[styles.inputFontStyle, inputStyle]}
 							numberOfLines={1}
 						/>
 					</View>
