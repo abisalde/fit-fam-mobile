@@ -32,8 +32,6 @@ export const UsernameSearchField: React.FC<FormFieldProps> = ({
 
 			if (!searchOptions.isValid) {
 				setFieldError(field, searchOptions.error);
-			} else {
-				handleChange(field)(val);
 			}
 		},
 		[searchOptions]
@@ -44,7 +42,7 @@ export const UsernameSearchField: React.FC<FormFieldProps> = ({
 			<Input
 				error={error}
 				onChangeText={(val) => {
-					handleChange(field)(val?.toLocaleLowerCase());
+					handleChange(field)(val);
 					handleSearch(val);
 				}}
 				onBlur={handleBlur(field)}

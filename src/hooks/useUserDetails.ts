@@ -29,7 +29,7 @@ export const useUserDetails = (): [UserCollectionStateType, () => void] => {
 
 	const fetchUser = React.useCallback(async () => {
 		if (!state.currentUser) return; // Don't execute function
-
+		setUserOption((prev) => ({...prev, isLoading: true}));
 		try {
 			const getData = query(
 				DBCollection(database, COLLECTIONS_NAME.USERS),

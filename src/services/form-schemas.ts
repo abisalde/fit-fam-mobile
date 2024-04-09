@@ -80,7 +80,7 @@ export const ProfileUpdateSchema: Yup.Schema<ProfileUpdateType> =
 			.lowercase()
 			.matches(
 				/^[a-zA-Z0-9]+$/,
-				'Username must contain only alphanumeric characters'
+				'Username must contain only alphanumeric characters and no trailing spaces'
 			)
 			.min(3, 'Username must be more than 3 characters')
 			.max(50, 'Username must not be more than 50 characters')
