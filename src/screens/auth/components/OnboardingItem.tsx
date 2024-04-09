@@ -14,7 +14,6 @@ import {Text} from '@shared-components/text-wrapper';
 import {Separator} from '@shared-components/separator';
 
 import {palette} from '@app-theme';
-import {FontKeys} from '@utils/font-keys';
 import {heightPixel, pixelSizeHorizontal, SCREEN_WIDTH} from '@utils/normalize';
 
 interface OnboardingItemProps {
@@ -31,7 +30,7 @@ export const OnboardingItem: React.FC<OnboardingItemProps> = ({
 		<View style={styles.root}>
 			<Text
 				center
-				fontFamily={FontKeys.DMSansMedium}
+				fontFamily='DMSansMedium'
 				h3
 				color={palette.white}
 				style={styles.textItem}

@@ -1,5 +1,4 @@
 import {ExtendedTheme} from '@react-navigation/native';
-import {FontKeys} from '@utils/font-keys';
 import {
 	fontPixel,
 	pixelSizeHorizontal,
@@ -44,7 +43,7 @@ export default (theme: ExtendedTheme) => {
 			color: colors.black,
 			fontSize: fontPixel(18),
 			lineHeight: fontPixel(24),
-			fontFamily: FontKeys.DMSansMedium,
+			fontFamily: 'DMSansMedium',
 			backgroundColor: colors.transparent,
 			paddingLeft: pixelSizeHorizontal(8),
 		},

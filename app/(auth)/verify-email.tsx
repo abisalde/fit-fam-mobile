@@ -13,7 +13,6 @@ import {Text} from '@shared-components/text-wrapper';
 
 import {loginUser, useGlobalState} from '@lib/global-reducer';
 import {maskEmail} from '@lib/helpers';
-import {FontKeys} from '@utils/font-keys';
 import {fontPixel, pixelSizeHorizontal} from '@utils/normalize';
 
 import {palette} from '@app-theme';
@@ -94,16 +93,11 @@ export default function VerifyEmail() {
 
 	return (
 		<View style={styles.root}>
-			<Text
-				center
-				fontFamily={FontKeys.DMSansSemiBold}
-				h2
-				color={palette.black}
-			>
+			<Text center fontFamily='DMSansBold' h2 color={palette.black}>
 				Verify your Email Address
 			</Text>
 			<Separator height={12} />
-			<Text center fontFamily={FontKeys.DMSansBold} h4 color={palette.primary}>
+			<Text center fontFamily='DMSansSemiBold' h4 color={palette.primary}>
 				Kindly check your email {`${maskEmail(email.toString())}`} for a
 				verification link
 			</Text>
@@ -132,7 +126,7 @@ const styles = StyleSheet.create({
 	},
 	instructionText: {
 		fontSize: fontPixel(16),
-		fontFamily: FontKeys.DMSansThin,
+		fontFamily: 'DMSansThin',
 	},
 	button: {
 		width: '100%',

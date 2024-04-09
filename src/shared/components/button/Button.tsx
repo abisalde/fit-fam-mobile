@@ -15,7 +15,6 @@ import {
  */
 import createStyles from './Button.styles';
 import {Text} from '@shared-components/text-wrapper';
-import {FontKeys} from '@utils/font-keys';
 
 import type {TextStyleProp, ViewStyleProp} from '@types';
 
@@ -75,7 +74,7 @@ export const Button: React.FC<ButtonProps> = ({
 					<Text
 						color={variant === 'primary' ? colors.white : colors.black}
 						center
-						fontFamily={FontKeys.DMSansSemiBold}
+						fontFamily='DMSansSemiBold'
 						style={textLabelStyle}
 					>
 						{textLabel}

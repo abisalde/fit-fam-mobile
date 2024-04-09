@@ -16,7 +16,6 @@ import Animated, {
 import {Text} from '@shared-components/text-wrapper';
 
 import {TabScreenConfigs, TabsIcon} from '@resources/tabs-icons';
-import {FontKeys} from '@utils/font-keys';
 import {fontPixel, heightPixel, pixelSizeVertical} from '@utils/normalize';
 
 import {palette} from '@app-theme';
@@ -97,11 +96,9 @@ const TabsBar: React.FC<BottomTabBarProps> = ({
 						) : (
 							<Icon focused={focused} name={name} />
 						)}
-						<Text
-							center
-							fontFamily={FontKeys.DMSansThin}
-							style={styles.title}
-						>{`${focused ? '' : options.title}`}</Text>
+						<Text center fontFamily='DMSansThin' style={styles.title}>{`${
+							focused ? '' : options.title
+						}`}</Text>
 					</Pressable>
 				);
 			})}
