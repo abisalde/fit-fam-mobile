@@ -23,6 +23,10 @@ interface Style {
 	navigateCardLeftContainer: ViewStyle;
 	navigateCardIconContainer: ViewStyle;
 	navigateCardRightContainer: ViewStyle;
+	deleteModalRoot: ViewStyle;
+	deleteModalContainer: ViewStyle;
+	deleteModalButtonContainer: ViewStyle;
+	deleteYesButton: ViewStyle;
 }
 
 export default (theme: ExtendedTheme) => {
@@ -107,6 +111,29 @@ export default (theme: ExtendedTheme) => {
 				width: 3,
 			},
 			elevation: 9,
+		},
+
+		deleteModalRoot: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			paddingHorizontal: 16,
+		},
+		deleteModalContainer: {
+			backgroundColor: colors.white,
+			zIndex: 10,
+			borderRadius: 20,
+			paddingHorizontal: pixelSizeHorizontal(16),
+			paddingVertical: pixelSizeVertical(30),
+			width: '100%',
+		},
+		deleteModalButtonContainer: {
+			flexDirection: 'row',
+			width: '100%',
+			alignItems: 'center',
+			justifyContent: 'space-between',
+		},
+		deleteYesButton: {
+			backgroundColor: colors.success,
 		},
 	});
 };
