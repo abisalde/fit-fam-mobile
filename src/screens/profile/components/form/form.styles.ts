@@ -34,7 +34,7 @@ export default (theme: ExtendedTheme) => {
 			height: 150,
 			borderColor: colors.secondary,
 			borderRadius: 75,
-			backgroundColor: colors.grey5,
+			backgroundColor: colors.white,
 			borderWidth: 2,
 		},
 		avatarPickerIcon: {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {
+	ActivityIndicator,
 	GestureResponderEvent,
 	StyleSheet,
 	TouchableOpacity,
@@ -11,10 +12,14 @@ import {router, useFocusEffect} from 'expo-router';
  * ? Local & Shared Imports
  */
 
-import {Avatar, NavigateCard, ProfileScreenLayout} from './components';
+import {
+	Avatar,
+	DeleteProfileModal,
+	NavigateCard,
+	ProfileScreenLayout,
+} from './components';
 
 import {Button} from '@shared-components/button';
-import {Modal} from '@shared-components/modal';
 import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
 
@@ -30,9 +35,15 @@ import {
 } from '@utils/normalize';
 
 export const Profile: React.FC = () => {
-	const [{user}, refresh] = useUserDetails();
-	const {modalVisible, deleteAccount, openCloseModal, isDeleting} =
-		useDeleAccount();
+	const [{user, isLoading}, refresh] = useUserDetails();
+	const {
+		deleteAccount,
+		openCloseModal,
+		deleteYesAccount,
+		promptUserForPassword,
+		handlePasswordChange,
+		deleteAccountState,
+	} = useDeleAccount();
 	const {dispatch, state} = useGlobalState();
 
 	const handleLogout = () => resetAppState(dispatch);
@@ -69,22 +80,30 @@ export const Profile: React.FC = () => {
 	const deletingInProgress = React.useCallback(
 		async (e: GestureResponderEvent) => {
 			e.stopPropagation();
-
+			const {password} = deleteAccountState;
 			if (state.currentUser && user) {
 				const currentUser = state.currentUser;
-				const username = user.username;
-				const imageString = user.image;
-				deleteAccount({currentUser, username, imageString});
+				const email = state.currentUser.email ?? '';
+				const {username, image} = user;
+				const imageString = image ?? '';
+				const res = await promptUserForPassword({email, password});
+				if (res) {
+					await deleteAccount({currentUser, username, imageString});
+				}
 			}
 		},
-		[state.currentUser, user]
+		[state.currentUser, user, promptUserForPassword, deleteAccountState]
 	);
 
 	return (
 		<ProfileScreenLayout headerTitle='Profile' isIndex={true}>
 			<Separator height={25} />
 			<View style={styles.top}>
-				<Avatar image={transformValues.image} />
+				{isLoading ? (
+					<ActivityIndicator animating size='large' color={palette.secondary} />
+				) : (
+					<Avatar image={transformValues.image} />
+				)}
 				<Separator height={12} />
 				<Text
 					h2
@@ -93,10 +112,12 @@ export const Profile: React.FC = () => {
 					center
 					style={styles.name}
 				>
-					{`${transformValues.first_name} ${transformValues.last_name}`}
+					{isLoading
+						? 'Loading...'
+						: `${transformValues.first_name} ${transformValues.last_name}`}
 				</Text>
 				<Text style={styles.username} center fontFamily='DMSansLight'>
-					{transformValues.username}
+					{isLoading ? 'Loading...' : `${transformValues.username}`}
 				</Text>
 				<Separator height={30} />
 				<TouchableOpacity
@@ -130,37 +151,16 @@ export const Profile: React.FC = () => {
 				textLabel='Delete Account'
 				onPress={openCloseModal}
 			/>
-			<Modal
-				visible={modalVisible || isDeleting}
-				onDismiss={isDeleting ? () => {} : openCloseModal}
-				style={styles.deleteModalRoot}
-			>
-				<View style={styles.deleteModalContainer}>
-					<Text center fontFamily='DMSansSemiBold' color={palette.black} h2>
-						Are you sure you want to delete your account?
-					</Text>
-					<Separator height={15} />
-					<Text h4 center fontFamily='DMSansLight' color={palette.black}>
-						This action is irreversible and will delete all your data
-						permanently.
-					</Text>
-					<Separator height={25} />
-					<Button
-						textLabel='Yes'
-						loading={isDeleting}
-						disabled={isDeleting}
-						onPress={deletingInProgress}
-						style={styles.deleteYesButton}
-					/>
-					<Separator height={16} />
-					<Button
-						textLabel='No'
-						variant='secondary'
-						onPress={openCloseModal}
-						disabled={isDeleting}
-					/>
-				</View>
-			</Modal>
+			<DeleteProfileModal
+				deleting={deleteAccountState.deleting}
+				deleteConfirmation={deleteYesAccount}
+				deleteInProgress={deletingInProgress}
+				handlePasswordChange={handlePasswordChange}
+				password={deleteAccountState.password}
+				passwordState={deleteAccountState.passwordState}
+				openCloseModal={openCloseModal}
+				visible={deleteAccountState.visible}
+			/>
 		</ProfileScreenLayout>
 	);
 };
@@ -194,27 +194,5 @@ const styles = StyleSheet.create({
 	deleteButton: {
 		backgroundColor: palette.error,
 		width: SCREEN_WIDTH / 1.75,
-	},
-	deleteModalRoot: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingHorizontal: 16,
-	},
-	deleteModalContainer: {
-		backgroundColor: palette.white,
-		zIndex: 10,
-		borderRadius: 20,
-		paddingHorizontal: pixelSizeHorizontal(16),
-		paddingVertical: pixelSizeVertical(30),
-		width: '100%',
-	},
-	deleteModalButtonContainer: {
-		flexDirection: 'row',
-		width: '100%',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-	},
-	deleteYesButton: {
-		backgroundColor: palette.success,
 	},
 });
