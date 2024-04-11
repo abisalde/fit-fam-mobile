@@ -8,6 +8,8 @@ import {
 	updateProfile,
 	getReactNativePersistence,
 	initializeAuth,
+	sendPasswordResetEmail,
+	fetchSignInMethodsForEmail,
 	type User,
 	type UserInfo,
 } from 'firebase/auth';
@@ -68,6 +70,8 @@ export {
 	uploadBytesResumable,
 	updateProfile,
 	ref,
+	sendPasswordResetEmail,
+	fetchSignInMethodsForEmail,
 	storageBucket,
 	deleteDoc,
 	deleteObject,

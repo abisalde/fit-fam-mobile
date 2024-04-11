@@ -14,6 +14,8 @@ interface Style {
 	avatarModalRoot: ViewStyle;
 	avatarModalContainer: ViewStyle;
 	avatar: ImageStyle;
+	uploadButtonYes: ViewStyle;
+	uploadButtonNo: ViewStyle;
 	formContainerRoot: ViewStyle;
 	formContentContainer: ViewStyle;
 }
@@ -71,6 +73,12 @@ export default (theme: ExtendedTheme) => {
 		formContentContainer: {
 			flex: 1,
 			paddingBottom: pixelSizeVertical(30),
+		},
+		uploadButtonYes: {
+			backgroundColor: colors.success,
+		},
+		uploadButtonNo: {
+			backgroundColor: colors.grey4,
 		},
 	});
 };
