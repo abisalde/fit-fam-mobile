@@ -40,6 +40,7 @@ export const UsernameSearchField: React.FC<FormFieldProps> = ({
 	return (
 		<>
 			<Input
+				autoCapitalize='none'
 				error={error}
 				onChangeText={(val) => {
 					handleChange(field)(val);

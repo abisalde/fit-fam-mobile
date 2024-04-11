@@ -70,6 +70,7 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 						<View style={styles.footer}>
 							<View style={styles.footerTop}>
 								<Text
+									h4
 									center
 									fontFamily='DMSansMedium'
 									style={styles.terms}
@@ -80,6 +81,7 @@ export const AuthScreenWrapper: React.FC<AuthScreenWrapperProps> = ({
 								<Separator width={6} />
 								<Link href={navigateTo}>
 									<Text
+										h4
 										accessibilityLabel={`Navigate to ${label}`}
 										color={colors.primary}
 										center

@@ -292,9 +292,13 @@ export const AvatarUpload: React.FC<AvatarUploadProps> = ({
 								? 'Choose or Capture Image to Upload'
 								: 'Upload your avatar'
 						}`}
-						style={{
-							backgroundColor: disabledBtn ? colors.grey4 : colors.success,
-						}}
+						style={
+							disabledBtn
+								? styles.uploadButtonNo
+								: avatar
+								? styles.uploadButtonYes
+								: {}
+						}
 						disabled={!avatar || disabledBtn}
 						loading={updateOptions.loading}
 					/>
