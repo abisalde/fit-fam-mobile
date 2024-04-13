@@ -10,6 +10,7 @@ import {
 	initializeAuth,
 	sendPasswordResetEmail,
 	fetchSignInMethodsForEmail,
+	updatePassword,
 	type User,
 	type UserInfo,
 } from 'firebase/auth';
@@ -72,6 +73,7 @@ export {
 	ref,
 	sendPasswordResetEmail,
 	fetchSignInMethodsForEmail,
+	updatePassword,
 	storageBucket,
 	deleteDoc,
 	deleteObject,

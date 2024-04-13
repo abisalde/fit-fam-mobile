@@ -24,3 +24,9 @@ export type AdminProfileType = {
 	id: string;
 	isAdmin: boolean;
 };
+
+export type NewPasswordType = {
+	old_password: string;
+	new_password: string;
+	confirm_new_password: string;
+};

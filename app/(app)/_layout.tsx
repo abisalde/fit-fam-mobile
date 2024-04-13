@@ -51,6 +51,7 @@ export default function RootLayoutNav() {
 			<Stack.Screen name='profile' />
 			<Stack.Screen name='profile-update' options={{presentation: 'modal'}} />
 			<Stack.Screen name='profile-edit' options={{presentation: 'modal'}} />
+			<Stack.Screen name='change-password' />
 		</Stack>
 	);
 }

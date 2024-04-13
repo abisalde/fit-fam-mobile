@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {query, where, getDocs} from 'firebase/firestore';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {Alert} from 'react-native';
 
 /**
  * > Local & Shared Imports
@@ -19,7 +20,6 @@ import {
 	deleteUser,
 	FITFAMAPP,
 } from '@utils/firebase';
-import {Alert} from 'react-native';
 
 /**
  *
@@ -137,7 +137,7 @@ export const useDeleAccount = () => {
 					errorMessage = 'Password is incorrect, please try again';
 				} else if (firebaseError.includes('auth/too-many-requests')) {
 					errorMessage =
-						'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.';
+						'Access to this account has been temporarily disabled due to many failed attempts. You can immediately restore it by resetting your password or you can try again later.';
 					setDeleteAccountState(initialState);
 				}
 

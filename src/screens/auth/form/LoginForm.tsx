@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {View, StyleSheet} from 'react-native';
 import {FormikHelpers} from 'formik';
-import {Link} from 'expo-router';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 /**
@@ -15,7 +14,6 @@ import {
 	SubmitButton,
 } from '@shared-components/forms';
 import {Separator} from '@shared-components/separator';
-import {Text} from '@shared-components/text-wrapper';
 
 import {LoginFormType} from '@services/model';
 import {LoginFormSchema} from '@services/form-schemas';
@@ -79,12 +77,6 @@ export function LoginForm({onSubmit}: LoginFormProps) {
 					updatePassword={updatePassword}
 					returnKeyType='done'
 				/>
-				<Separator height={6} />
-				<Link href='/password-reset' style={styles.forgotPassword}>
-					<Text h4 fontFamily='DMSansSemiBold' right color={palette.primary}>
-						Forgot Password?
-					</Text>
-				</Link>
 				<Separator height={26} />
 				<SubmitButton textLabel='Submit' />
 			</FormContainer>

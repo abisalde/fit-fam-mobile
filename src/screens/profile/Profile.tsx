@@ -14,6 +14,7 @@ import {router, useFocusEffect} from 'expo-router';
 
 import {
 	Avatar,
+	ChangePasswordModal,
 	DeleteProfileModal,
 	NavigateCard,
 	ProfileScreenLayout,
@@ -24,7 +25,7 @@ import {Separator} from '@shared-components/separator';
 import {Text} from '@shared-components/text-wrapper';
 
 import {useGlobalState, resetAppState} from '@lib/global-reducer';
-import {useDeleAccount, useUserDetails} from '@hooks';
+import {useDeleAccount, usePasswordReset, useUserDetails} from '@hooks';
 
 import {palette} from '@app-theme';
 import {
@@ -44,6 +45,9 @@ export const Profile: React.FC = () => {
 		handlePasswordChange,
 		deleteAccountState,
 	} = useDeleAccount();
+
+	const {sendEmail, passwordModal, passwordResetState} = usePasswordReset();
+
 	const {dispatch, state} = useGlobalState();
 
 	const handleLogout = () => resetAppState(dispatch);
@@ -77,6 +81,15 @@ export const Profile: React.FC = () => {
 		router.navigate('/(app)/profile-edit');
 	};
 
+	const navigatePassword = React.useCallback(
+		(e: GestureResponderEvent) => {
+			e.stopPropagation();
+			router.push('/(app)/change-password');
+			passwordModal();
+		},
+		[passwordModal]
+	);
+
 	const deletingInProgress = React.useCallback(
 		async (e: GestureResponderEvent) => {
 			e.stopPropagation();
@@ -93,6 +106,17 @@ export const Profile: React.FC = () => {
 			}
 		},
 		[state.currentUser, user, promptUserForPassword, deleteAccountState]
+	);
+
+	const sendEmailPassword = React.useCallback(
+		async (e: GestureResponderEvent) => {
+			e.stopPropagation();
+			if (state.currentUser) {
+				const email = state.currentUser.email ?? '';
+				await sendEmail(email);
+			}
+		},
+		[state.currentUser]
 	);
 
 	return (
@@ -136,7 +160,7 @@ export const Profile: React.FC = () => {
 
 			<View style={styles.navigateCardRoot}>
 				<NavigateCard
-					action={() => {}}
+					action={passwordModal}
 					iconName='password'
 					title='Change Password'
 				/>
@@ -161,6 +185,13 @@ export const Profile: React.FC = () => {
 				openCloseModal={openCloseModal}
 				visible={deleteAccountState.visible}
 			/>
+			<ChangePasswordModal
+				loading={passwordResetState.loading}
+				openCloseModal={passwordModal}
+				navigatePassword={navigatePassword}
+				sendEmail={sendEmailPassword}
+				visible={passwordResetState.visible}
+			/>
 		</ProfileScreenLayout>
 	);
 };
@@ -169,6 +200,7 @@ const styles = StyleSheet.create({
 	top: {
 		justifyContent: 'center',
 		alignItems: 'center',
+		flexGrow: 1,
 	},
 	name: {
 		textTransform: 'capitalize',
