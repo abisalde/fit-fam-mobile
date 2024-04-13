@@ -3,7 +3,12 @@ import * as Yup from 'yup';
 /**
  * ? Local Imports
  */
-import {RegisterFormType, LoginFormType, ProfileUpdateType} from './model';
+import {
+	RegisterFormType,
+	LoginFormType,
+	ProfileUpdateType,
+	NewPasswordType,
+} from './model';
 
 export const RegisterFormSchema: Yup.Schema<RegisterFormType> =
 	Yup.object().shape({
@@ -115,3 +120,31 @@ export const imageValidationSchema = Yup.object().shape({
 			}
 		}),
 });
+
+export const NewPasswordFormSchema: Yup.Schema<NewPasswordType> =
+	Yup.object().shape({
+		old_password: Yup.string()
+			.trim()
+			.min(8, 'Password must be at least 8 characters')
+			.matches(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/,
+				'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+			)
+			.required('')
+			.label('Old Password'),
+		new_password: Yup.string()
+			.trim()
+			.min(8, 'Password must be at least 8 characters')
+			.matches(
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/,
+				'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+			)
+			.required('New Password is required')
+			.label('New Password'),
+
+		confirm_new_password: Yup.string()
+			.trim()
+			.oneOf([Yup.ref('new_password'), undefined], 'Passwords must match')
+			.required('Confirm New Password is required')
+			.label('Confirm New Password'),
+	});

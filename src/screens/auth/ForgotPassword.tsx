@@ -12,15 +12,15 @@ import {
 } from '@utils/firebase';
 import {ScreenWrapper} from '@shared-components/screen-wrapper';
 
-const email = 'ger_gemam@yahoo,com';
+const email = 'ger_gemam@yahoo.com';
 
 export const ForgotPasswordScreen: React.FC = () => {
 	const sendEmail = async () => {
 		try {
-			const l = await fetchSignInMethodsForEmail(FITFAMAPP, email);
-			// const res = await sendPasswordResetEmail(FITFAMAPP, email);
+			// const l = await fetchSignInMethodsForEmail(FITFAMAPP, email);
+			const res = await sendPasswordResetEmail(FITFAMAPP, email);
 
-			console.log({l});
+			console.log({res});
 		} catch (error) {
 			console.log({error});
 			if (error instanceof Error) {
